@@ -1,3 +1,55 @@
-<h1>
-  {{title}}
-</h1>
+<!-- Menu with content and footer -> Start -->
+
+<div class="pure-container" data-effect="pure-effect-push">
+  <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
+  <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+
+
+
+  <nav class="pure-drawer" data-position="left">
+
+    <!-- menu for large display -> without refresh -> Start -->
+
+    <ul class="hideForSmall" style="padding: 100px 20px; margin: 0;">
+      <li><a class="active" [routerLink] = "['/home']" >Home</a></li>
+      <li><a [routerLink] = "['/registerLogin']">Register\Login</a></li>
+      <li><a [routerLink] = "['/personal']">Personal</a></li>
+      <li><a [routerLink] = "['/media']">Media</a></li>
+      <li><a [routerLink] = "['/users']">Users</a></li>
+      <li><a [routerLink] = "['/contact']">Contact</a></li>
+    </ul>
+
+    <!-- menu for large display -> without refresh -> End -->
+
+    <!-- menu for small display -> with refresh -> Start -->
+
+    <ul class="hideForLarge" style="padding: 100px 20px; margin: 0;">
+      <li><a class="active" href="home">Home - small</a></li>
+      <li><a href="registerLogin">Register\Login</a></li>
+      <li><a href="personal">Personal</a></li>
+      <li><a href="media">Media</a></li>
+      <li><a href="users">Users</a></li>
+      <li><a href="contact">Contact</a></li>
+    </ul>
+
+    <!-- menu for small display -> with refresh -> End -->
+
+  </nav>
+
+  <!-- Page content -> Start -->
+
+  <div class="pure-pusher-container">
+    <div class="pure-pusher">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -> End -->
+
+  <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+</div>
+
+<!-- Menu with content and footer -> End -->
+

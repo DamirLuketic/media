@@ -1,0 +1,4 @@
+.hideForSmall {
+    visibility: hidden;
+    position: absolute;
+}

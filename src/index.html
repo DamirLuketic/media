@@ -4,10 +4,18 @@
   <meta charset="utf-8">
   <title>Media</title>
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  
+  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.min.css">
+
+  <!-- menu for large and medium screen -> include class for hide small menu -->
+  <link rel='stylesheet' media='screen and (min-width: 641px)' href="./assets/bootstrap/css/large.css" />
+
+  <!-- menu for small screen -> include class for hide large menu
+   -> include redirect through link menu, for showing content without closing menu &ndash;&gt; -->
+  <link rel='stylesheet' media='screen and (max-width: 640px)' href="./assets/bootstrap/css/small.css" />
+
+
 </head>
 <body>
   <app-root>Loading...</app-root>

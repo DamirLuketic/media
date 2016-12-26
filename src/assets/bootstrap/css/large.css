@@ -1,0 +1,4 @@
+.hideForLarge {
+    visibility: hidden;
+    position: relative;
+}
