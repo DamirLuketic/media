@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CookieService} from "angular2-cookie/services/cookies.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-default',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+      private cookieService: CookieService,
+      private authService: AuthService
+  ) { }
 
   ngOnInit() {
+    if(this.cookieService.getObject('auth') != null){
+      this.authService.auth = this.cookieService.getObject('auth');
+    }
   }
 
 }

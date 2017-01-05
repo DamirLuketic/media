@@ -1,5 +1,63 @@
-<p>
-  media works!
-</p>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <nav class="navbar navbar-default" id="mediaNavbar">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
 
-<router-outlet></router-outlet>
+                    <!-- Dropdown for "for change" -> Start -->
+                    <li class="dropdown" appdropdown>
+                        <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{forChange}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a (click)="selectForChangeAll()" [routerLink] = "['/media', 'changeList']">{{allMedia}}</a></li>
+                            <li><a (click)="selectForChangeAudio()" [routerLink] = "['/media', 'changeList']">Audio</a></li>
+                            <li><a (click)="selectForChangeVideo()" [routerLink] = "['/media', 'changeList']">Video</a></li>
+                        </ul>
+                    </li>
+                    <!-- Dropdown for "for change" -> End -->
+
+                    <!-- Dropdown for "allowed list" -> Start -->
+                    <li class="dropdown" appdropdown>
+                        <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{allowedList}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a [routerLink] = "['/media', 'allowedList']">{{allMedia}}</a></li>
+                            <li><a [routerLink] = "['/login']">Audio</a></li>
+                            <li><a [routerLink] = "['/login']">Video</a></li>
+                        </ul>
+                    </li>
+                    <!-- Dropdown for "allowed list" -> End -->
+
+                    <!-- Dropdown for "personal list" -> Start -->
+                    <li class="dropdown" appdropdown>
+                        <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{personalList}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a [routerLink] = "['/media', 'personalList']">{{allMedia}}</a></li>
+                            <li><a [routerLink] = "['/login']">Audio</a></li>
+                            <li><a [routerLink] = "['/login']">Video</a></li>
+                            <button class="btn btn-info" [routerLink]="['/media', 'newMedia']">{{newMedia}}</button>
+                        </ul>
+                    </li>
+                    <!-- Dropdown for "personal list" -> End -->
+                </ul>
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+</div>
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <router-outlet></router-outlet>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+

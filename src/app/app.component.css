@@ -4309,3 +4309,14 @@ li a:hover:not(.active) {
 /*nav {*/
     /*padding-top: 2rem;*/
 /*}*/
+
+/* CSS for flags (change Language) */
+.languageFlegs {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.languageFlegs > img {
+    margin-right: 2rem;
+    cursor: pointer;
+}

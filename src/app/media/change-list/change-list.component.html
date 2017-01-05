@@ -1,0 +1,6 @@
+<h3>{{forChange}}</h3>
+<h4>{{currentViewCategory}}</h4>
+<ul class="list-group">
+  <li *ngFor="let m of showMedia" class="list-group-item">
+    {{m?.a_band}}<span *ngIf="m.a_band"> - </span>{{m?.a_album}}{{m?.m_name}}{{' (' + m.year + ')'}}</li>
+</ul>

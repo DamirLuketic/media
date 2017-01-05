@@ -7,22 +7,12 @@ export class LanguageService {
   language: string = navigator.language;
 
   constructor() {
-    if(this.language != 'de' || this.language != 'hr'){
-      this.language = 'en';
+    if(this.language != 'de'){
+      if(this.language != 'hr'){
+        this.language = 'en';
+      }
     }
   }
-
-  changeToGerman(){
-    this.language = 'de';
-  };
-
-  changeToEnglisch(){
-    this.language = 'en';
-  };
-
-  changeToCroatian(){
-    this.language = 'hr';
-  };
 
   getLanguage(){
     return this.language;

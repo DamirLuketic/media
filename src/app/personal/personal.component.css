@@ -1,0 +1,7 @@
+#basicContainer {
+    margin-top: 12rem;
+}
+
+form .ng-invalid{
+    border: 1px solid crimson;
+}

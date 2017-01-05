@@ -11,28 +11,52 @@
     <!-- menu for large display -> without refresh -> Start -->
 
     <ul class="hideForSmall" style="padding: 100px 20px; margin: 0;">
-      <li><a class="active" [routerLink] = "['/home']" >Home</a></li>
-      <li><a [routerLink] = "['/registerLogin']">Register\Login</a></li>
-      <li><a [routerLink] = "['/personal']">Personal</a></li>
-      <li><a [routerLink] = "['/media']">Media</a></li>
-      <li><a [routerLink] = "['/users']">Users</a></li>
-      <li><a [routerLink] = "['/contact']">Contact</a></li>
+
+      <!-- set language -> Start -->
+
+      <div class="languageFlegs">
+        <img src="./assets/images/flagsIcon/gb-22.png" alt="en" (click)="changeToEnglisch()">
+        <img src="./assets/images/flagsIcon/de-22.png" alt="de" (click)="changeToGerman()">
+        <img src="./assets/images/flagsIcon/hr-22.png" alt="hr" (click)="changeToCroatian()">
+      </div>
+
+      <!-- set language -> End -->
+
+      <li><a [routerLink] = "['/home']" routerLinkActive="active">{{home}}</a></li>
+      <li *ngIf="!isAuth()"><a [routerLink] = "['/registerLogin']" routerLinkActive="active">{{registerLogin}}</a></li>
+      <li *ngIf="isAuth()" style="cursor: pointer"><a (click)="logoutFunction()">{{logout}}</a></li>
+      <li *ngIf="isAuth()"><a [routerLink] = "['/personal']" routerLinkActive="active">{{personal}}</a></li>
+      <li *ngIf="isAuth()"><a [routerLink] = "['/media']" routerLinkActive="active">{{media}}</a></li>
+      <li *ngIf="isAuth()"><a [routerLink] = "['/users']" routerLinkActive="active">{{users}}</a></li>
+      <li><a [routerLink] = "['/contact']" routerLinkActive="active">{{contact}}</a></li>
     </ul>
 
     <!-- menu for large display -> without refresh -> End -->
 
-    <!-- menu for small display -> with refresh -> Start -->
+    <!-- menu for small display -> with refresh -> For future work -> Start -->
 
     <ul class="hideForLarge" style="padding: 100px 20px; margin: 0;">
-      <li><a class="active" href="home">Home - small</a></li>
-      <li><a href="registerLogin">Register\Login</a></li>
-      <li><a href="personal">Personal</a></li>
-      <li><a href="media">Media</a></li>
-      <li><a href="users">Users</a></li>
-      <li><a href="contact">Contact</a></li>
+
+      <!-- set language -> Start -->
+
+      <div class="languageFlegs">
+        <img src="./assets/images/flagsIcon/gb-22.png" alt="en" (click)="changeToEnglisch()">
+        <img src="./assets/images/flagsIcon/de-22.png" alt="de" (click)="changeToGerman()">
+        <img src="./assets/images/flagsIcon/hr-22.png" alt="hr" (click)="changeToCroatian()">
+      </div>
+
+      <!-- set language -> End -->
+
+      <li><a [routerLink] = "['/home']" routerLinkActive="active">{{home}}</a></li>
+      <li *ngIf="!isAuth()"><a [routerLink] = "['/registerLogin']" routerLinkActive="active">{{registerLogin}}</a></li>
+      <li *ngIf="isAuth()" style="cursor: pointer"><a (click)="logoutFunction()">{{logout}}</a></li>
+      <li *ngIf="isAuth()"><a [routerLink] = "['/personal']" routerLinkActive="active">{{personal}}</a></li>
+      <li *ngIf="isAuth()"><a [routerLink] = "['/media']" routerLinkActive="active">{{media}}</a></li>
+      <li *ngIf="isAuth()"><a [routerLink] = "['/users']" routerLinkActive="active">{{users}}</a></li>
+      <li><a [routerLink] = "['/contact']" routerLinkActive="active">{{contact}}</a></li>
     </ul>
 
-    <!-- menu for small display -> with refresh -> End -->
+    <!-- menu for small display -> with refresh -> For future work -> End -->
 
   </nav>
 

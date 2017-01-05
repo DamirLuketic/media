@@ -1,0 +1,31 @@
+button {
+    margin-bottom: 0.3rem;
+    width: 15rem;
+}
+
+a {
+    cursor: pointer;
+}
+
+/* Style for media menu*/
+#mediaNavbar {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.dropdown-menu {
+    text-align: center;
+}
+
+.dropdown {
+    width: 16rem;
+}
+
+/* Add style for small screen */
+@media (max-width: 640px) {
+    #mediaNavbar {
+        margin-top: 9rem;
+    }
+}

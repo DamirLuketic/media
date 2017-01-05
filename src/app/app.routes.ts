@@ -9,16 +9,18 @@ import { ContactComponent } from "./contact/contact.component";
 import { MEDIA_ROUTES } from "./media/media.routes";
 import { USERS_ROUTES } from "./users/users.routes";
 
+// Basic routes is not necessary with Child Routes, if Child routes defaults routes is set
+
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: 'home', component: DefaultComponent},
     {path: 'registerLogin', component: RegisterLoginComponent},
     {path: 'personal', component: PersonalComponent},
-        {path: 'media', redirectTo: '/media/list', pathMatch: 'full'},
-    {path: 'media', component: MediaComponent},
+        {path: 'media', redirectTo: '/media/changeList', pathMatch: 'full'},
+    // {path: 'media', component: MediaComponent},
         {path: 'media', component: MediaComponent, children: MEDIA_ROUTES},
         {path: 'users', redirectTo: '/users/list', pathMatch: 'full'},
-    {path: 'users', component: UsersComponent},
+    // {path: 'users', component: UsersComponent},
         {path: 'users', component: UsersComponent, children: USERS_ROUTES},
     {path: 'contact', component: ContactComponent},
     {path: '**', redirectTo: '/home', pathMatch: 'full'}
