@@ -8,9 +8,8 @@
                     <li class="dropdown" appdropdown>
                         <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{forChange}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a (click)="selectForChangeAll()" [routerLink] = "['/media', 'changeList']">{{allMedia}}</a></li>
-                            <li><a (click)="selectForChangeAudio()" [routerLink] = "['/media', 'changeList']">Audio</a></li>
-                            <li><a (click)="selectForChangeVideo()" [routerLink] = "['/media', 'changeList']">Video</a></li>
+                            <li><a (click)="setMediaToAudio()" [routerLink] = "['/media', 'changeList']">Audio</a></li>
+                            <li><a (click)="setMediaToVideo()" [routerLink] = "['/media', 'changeList']">Video</a></li>
                         </ul>
                     </li>
                     <!-- Dropdown for "for change" -> End -->
@@ -19,9 +18,8 @@
                     <li class="dropdown" appdropdown>
                         <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{allowedList}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a [routerLink] = "['/media', 'allowedList']">{{allMedia}}</a></li>
-                            <li><a [routerLink] = "['/login']">Audio</a></li>
-                            <li><a [routerLink] = "['/login']">Video</a></li>
+                            <li><a (click)="setMediaToAudio()" [routerLink] = "['/media', 'allowedList']">Audio</a></li>
+                            <li><a (click)="setMediaToVideo()" [routerLink] = "['/media', 'allowedList']">Video</a></li>
                         </ul>
                     </li>
                     <!-- Dropdown for "allowed list" -> End -->
@@ -30,9 +28,8 @@
                     <li class="dropdown" appdropdown>
                         <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">{{personalList}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a [routerLink] = "['/media', 'personalList']">{{allMedia}}</a></li>
-                            <li><a [routerLink] = "['/login']">Audio</a></li>
-                            <li><a [routerLink] = "['/login']">Video</a></li>
+                            <li><a (click)="setMediaToAudio()" [routerLink] = "['/media', 'personalList']">Audio</a></li>
+                            <li><a (click)="setMediaToVideo()" [routerLink] = "['/media', 'personalList']">Video</a></li>
                             <button class="btn btn-info" [routerLink]="['/media', 'newMedia']">{{newMedia}}</button>
                         </ul>
                     </li>
@@ -43,17 +40,18 @@
     </div>
 </div>
 
-
+<!-- Outlet for media view -> Start -->
 
     <div class="row">
         <div class="col-md-4">
             <router-outlet></router-outlet>
         </div>
         <div class="col-md-8">
-
+            <app-show-media></app-show-media>
         </div>
     </div>
 
+<!-- Outlet for media view -> End -->
 
 
 

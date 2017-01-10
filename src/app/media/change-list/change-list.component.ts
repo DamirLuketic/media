@@ -1,8 +1,11 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
-import { MediaService } from "../../services/media.service";
-import { MediaForChange } from "../../class/media-for-change";
+import {LanguageService} from "../../shared/services/language.service";
+import {AudioService} from "../../shared/services/audio.service";
+import {VideoService} from "../../shared/services/video.service";
+import { CurrentService } from "../../shared/services/current.service";
+import {AudioForChange} from "../../shared/class/audio-for-change";
+import {VideoForChange} from "../../shared/class/video-for-change";
 import {Subscription} from "rxjs";
-import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'app-list',
@@ -11,38 +14,55 @@ import {LanguageService} from "../../services/language.service";
 })
 export class ChangeListComponent implements OnInit, DoCheck, OnDestroy {
 
+    // Collected data from media
+    public audioForChange: AudioForChange[];
+    public videoForChange: VideoForChange[];
+
     // Default value for language
     public forChange: string;
-    public currentViewCategory: string;
+    public currentViewMedia: string;
 
-    // Subscription
-    private subscription: Subscription = null;
+    // Subscriptions
+    private audioSubscription: Subscription = null;
+    private videoSubscription: Subscription = null;
 
-    // Current category
-    public currentCategory: number;
-
-    // Media for showing
-    public showMedia: MediaForChange[];
+    // Current media id
+    public currentAudioId: number;
+    public currentVideoId: number;
 
   constructor(
-      private mediaService: MediaService,
-      private languageService: LanguageService
+      private languageService: LanguageService,
+      private audioService: AudioService,
+      private videoService: VideoService,
+      private currentService: CurrentService
   ) { }
 
-  // Each time collect media data from server (if media is changed show no more)
   ngOnInit() {
-        // Set default category for view ("All")
-      this.mediaService.setForChangeAllCategory();
+      // Change purpose setting
+      this.currentService.currentPurpose = 'Change';
 
-      this.mediaService.getMediaForChange().subscribe(
-          (data: MediaForChange[]) => {
-            this.mediaService.mediaForChange = data,
-                console.log(data)
-          }
-      );
+      // Collect data for all media group -> On each init collect data to update current list
+          this.audioSubscription = this.audioService.getAudioForChange().subscribe(
+              (data: AudioForChange[]) => {
+                  this.audioForChange = data,
+                  console.log(data)
+              },
+              error => console.log(error)
+          )
+
+          this.videoSubscription = this.videoService.getVideoForChange().subscribe(
+              (data: VideoForChange[]) => {
+                      this.videoForChange = data,
+                      console.log(data)
+              },
+              error => console.log(error)
+          )
   }
 
   ngDoCheck(){
+
+      // Set current view media from "current" service
+      this.currentViewMedia = this.currentService.currentMediaType;
 
       // Part for translate
       switch (this.languageService.getLanguage()){
@@ -59,53 +79,30 @@ export class ChangeListComponent implements OnInit, DoCheck, OnDestroy {
               this.forChange = 'Exchange';
       }
 
-      // Part for collect media data for showing
-      this.currentCategory = this.mediaService.currentCategory;
-      this.showMedia = [];
-
-      if(this.currentCategory == 1){
-
-          // Transalte category title
-          switch (this.languageService.getLanguage()){
-              case 'de':
-                  this.currentViewCategory = 'Alle';
-                  break;
-              case 'en':
-                  this.currentViewCategory = 'All';
-                  break;
-              case 'hr':
-                  this.currentViewCategory = 'Sve';
-                  break;
-              default:
-                  this.currentViewCategory = 'All';
-          }
-
-          this.showMedia = this.mediaService.selectedMediaForChange;
-      }else if(this.currentCategory == 2){
-
-          this.currentViewCategory = 'Audio';
-
-          for(let media of this.mediaService.selectedMediaForChange){
-              if(media.category_id == 1 || media.category_id == 2){
-                  this.showMedia.push(media);
-              }
-          }
-      }else if(this.currentCategory == 3){
-
-          this.currentViewCategory = 'Video';
-
-          for(let media of this.mediaService.selectedMediaForChange){
-              if(media.category_id == 3 || media.category_id == 4){
-                  this.showMedia.push(media);
-              }
-          }
-      }
   }
 
-  // Remove subscription
-    ngOnDestroy(){
-      if(this.subscription != null){
-          this.subscription.unsubscribe();
-      }
+    // Set current media id and current media
+    setCurrentMedia(media){
+        if(this.currentViewMedia == 'Audio'){
+            this.currentAudioId = media.id;
+        }else if(this.currentViewMedia == 'Video'){
+            this.currentVideoId = media.id;
+        };
+
+        this.currentService.currentMedia = media;
+    }
+
+    ngOnDestroy() {
+      // Remove subscriptions
+        if(this.audioSubscription != null){
+            this.audioSubscription.unsubscribe();
+        }
+
+        if(this.videoSubscription != null){
+            this.videoSubscription.unsubscribe();
+        }
+
+      // Reset current media
+        this.currentService.currentMedia = [];
     }
 }

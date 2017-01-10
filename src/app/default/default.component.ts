@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from "angular2-cookie/services/cookies.service";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-default',

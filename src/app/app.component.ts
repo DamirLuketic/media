@@ -1,6 +1,6 @@
 import { Component, DoCheck } from '@angular/core';
-import { LanguageService } from "./services/language.service";
-import { AuthService } from "./services/auth.service";
+import { LanguageService } from "./shared/services/language.service";
+import { AuthService } from "./shared/services/auth.service";
 import {Router} from "@angular/router";
 
 @Component({

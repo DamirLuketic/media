@@ -1,10 +1,10 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import { LanguageService } from "../services/language.service";
-import { ContactService } from "../services/contact.service";
-import { Contact } from "../class/contact";
+import { LanguageService } from "../shared/services/language.service";
+import { ContactService } from "../shared/services/contact.service";
+import { Contact } from "../shared/class/contact";
 import { Router } from "@angular/router";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../shared/services/auth.service";
 import {Subscription} from "rxjs";
 
 @Component({

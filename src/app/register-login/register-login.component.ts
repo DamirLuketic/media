@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { AuthService } from "../services/auth.service";
+import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { CookieService } from "angular2-cookie/services/cookies.service";
-import { LoginData } from "../class/login-data";
-import { Auth } from "../class/auth";
-import { RegistrationData } from "../class/registration-data";
+import { LoginData } from "../shared/class/login-data";
+import { Auth } from "../shared/class/auth";
+import { RegistrationData } from "../shared/class/registration-data";
 
 @Component({
   selector: 'app-register-login',

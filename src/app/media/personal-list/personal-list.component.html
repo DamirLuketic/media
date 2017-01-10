@@ -1,4 +1,22 @@
-<h3>Personal data</h3>
-<br />
-<p>some</p>
-<p>and table</p>
+<h3>{{personal}}</h3>
+<h4>{{currentViewMedia}}</h4>
+
+<!-- Show list for audio -> Start -->
+
+<ul class="list-group" *ngIf="currentViewMedia == 'Audio'">
+    <li class="list-group-item" *ngFor="let audio of audioPersonal" (click)="setCurrentMedia(audio)"
+        [ngClass]="{currentView: currentAudioId == audio.id}">
+        {{audio.band + ' - ' + audio.album}}<span *ngIf="audio.year">{{' (' + audio?.year + ')'}}</span></li>
+</ul>
+
+<!-- Show list for audio -> End -->
+
+<!-- Show list for video -> Start -->
+
+<ul class="list-group" *ngIf="currentViewMedia == 'Video'">
+    <li class="list-group-item" *ngFor="let video of videoPersonal" (click)="setCurrentMedia(video)"
+        [ngClass]="{currentView: currentVideoId == video.id}">
+        {{video.name}}<span *ngIf="video.year">{{' (' + video?.year + ')'}}</span></li>
+</ul>
+
+<!-- Show list for video -> End -->

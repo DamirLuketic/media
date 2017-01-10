@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { LanguageService } from "../services/language.service";
-import {MediaService} from "../services/media.service";
+import { LanguageService } from "../shared/services/language.service";
+import {CurrentService} from "../shared/services/current.service";
 
 @Component({
   selector: 'app-media',
@@ -15,15 +15,9 @@ export class MediaComponent implements OnInit, DoCheck {
   public personalList: string;
   public newMedia: string;
 
-  // Default value for menu component
-  public allMedia: string;
-
-  // Current category
-  public currentCategory: number;
-
   constructor(
       private languageService: LanguageService,
-      private mediaService: MediaService
+      private currentService: CurrentService
   ) { }
 
   ngOnInit() {
@@ -36,46 +30,34 @@ export class MediaComponent implements OnInit, DoCheck {
           this.allowedList = 'Zulässige Liste';
           this.personalList = 'Persönliche Liste';
           this.newMedia = 'Neue Medien';
-          this.allMedia = 'Alle';
           break;
         case 'en':
           this.forChange = 'For change';
           this.allowedList = 'Allowed list';
           this.personalList = 'Personal list';
           this.newMedia = 'New media';
-          this.allMedia = 'All';
           break;
         case 'hr':
           this.forChange = 'Za razmjenu';
           this.allowedList = 'Dozvoljene liste';
           this.personalList = 'Osobna lista';
           this.newMedia = 'Novi medij';
-          this.allMedia = 'Sve';
           break;
         default:
           this.forChange = 'For change';
           this.allowedList = 'Allowed list';
           this.personalList = 'Personal list';
           this.newMedia = 'New media';
-          this.allMedia = 'All';
       }
   }
 
-  // For "for change" -> Start
-
-  selectForChangeAll(){
-    this.mediaService.setForChangeAllCategory();
+  // Set current media to 'Audio'
+  setMediaToAudio(){
+    this.currentService.currentMediaType = 'Audio';
   }
 
-  selectForChangeAudio(){
-    this.mediaService.setForChangeAudioCategory();
+  // Set current media to 'Video'
+  setMediaToVideo(){
+    this.currentService.currentMediaType = 'Video';
   }
-
-  selectForChangeVideo(){
-    this.mediaService.setForChangeVideoCategory();
-  }
-
-  // For "for change" -> Start
-
-
 }

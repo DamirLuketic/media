@@ -1,6 +1,22 @@
 <h3>{{forChange}}</h3>
-<h4>{{currentViewCategory}}</h4>
-<ul class="list-group">
-  <li *ngFor="let m of showMedia" class="list-group-item">
-    {{m?.a_band}}<span *ngIf="m.a_band"> - </span>{{m?.a_album}}{{m?.m_name}}{{' (' + m.year + ')'}}</li>
+<h4>{{currentViewMedia}}</h4>
+
+<!-- Show list for audio -> Start -->
+
+<ul class="list-group" *ngIf="currentViewMedia == 'Audio'">
+  <li class="list-group-item" *ngFor="let audio of audioForChange" (click)="setCurrentMedia(audio)"
+      [ngClass]="{currentView: currentAudioId == audio.id}">
+    {{audio.band + ' - ' + audio.album}}<span *ngIf="audio.year">{{' (' + audio?.year + ')'}}</span></li>
 </ul>
+
+<!-- Show list for audio -> End -->
+
+<!-- Show list for video -> Start -->
+
+<ul class="list-group" *ngIf="currentViewMedia == 'Video'">
+  <li class="list-group-item" *ngFor="let video of videoForChange" (click)="setCurrentMedia(video)"
+      [ngClass]="{currentView: currentVideoId == video.id}">
+    {{video.name}}<span *ngIf="video.year">{{' (' + video?.year + ')'}}</span></li>
+</ul>
+
+<!-- Show list for video -> End -->
