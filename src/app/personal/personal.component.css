@@ -5,3 +5,7 @@
 form .ng-invalid{
     border: 1px solid crimson;
 }
+
+#personalImage {
+    width: 20rem;
+}

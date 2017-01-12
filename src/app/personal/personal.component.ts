@@ -26,9 +26,13 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
   public newPasswordRepeatTitle: string;
   public update: string;
 
-  // default values for form input
+  // Default values for form input
   public name: string;
   public newPasswordPlaceholder: string;
+
+  // Image src value
+  // public imageSrc: string = null;
+  public imageSrc: string = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Crystal_personal.svg/2000px-Crystal_personal.svg.png';
 
   constructor(
       private formBuilder: FormBuilder,
