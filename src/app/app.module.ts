@@ -24,10 +24,10 @@ import { RootService } from "./shared/services/root.service";
 import { CookieService } from "angular2-cookie/services/cookies.service";
 import { ContactService } from "./shared/services/contact.service";
 import { DropdownDirective } from "./shared/directives/dropdown.directive";
-import {AudioService} from "./shared/services/audio.service";
-import {VideoService} from "./shared/services/video.service";
-import {CurrentService} from "./shared/services/current.service";
-import {ShowMediaComponent} from "./media/show-media/show-media.component";
+import { AudioService } from "./shared/services/audio.service";
+import { VideoService } from "./shared/services/video.service";
+import { CurrentService } from "./shared/services/current.service";
+import { ShowMediaComponent } from "./media/show-media/show-media.component";
 
 
 @NgModule({

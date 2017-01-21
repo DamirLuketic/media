@@ -7,3 +7,15 @@
 #offer {
     pointer-events: auto;
 }
+
+/* Class for hide component */
+.hideThis {
+    visibility: hidden;
+    position: absolute;
+}
+
+.hideShowButton {
+    background-color: transparent;
+    color: #4cae4c;
+    margin: 0 0 1.75rem 2.2rem;
+}

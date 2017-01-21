@@ -50,23 +50,10 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="first_release_year">{{originalReleaseYear}}</label>
-            <input type="number" class="form-control" id="first_release_year" value="{{currentMedia?.first_release_year}}">
+            <input type="number" class="form-control" id="first_release_year"
+                   value="{{currentMedia?.first_release_year}}">
           </div>
         </div>
-
-        <!-- Images - Start -->
-        <div class="col-md-12">
-          <hr />
-            <h4><b>{{images}}</b></h4>
-            <div class="row">
-              <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
-                <img *ngIf="image.featured == 1" src="{{image.url}}" alt="featured image" class="col-sm-4">
-                <img *ngIf="image.featured != 1" src="{{image.url}}" alt="not featured image" class="col-sm-3">
-              </div>
-            </div>
-          <hr />
-        </div>
-        <!-- Images - End -->
 
         <div class="col-md-12">
           <div class="form-group">
@@ -104,20 +91,42 @@
           </div>
         </div>
 
-        <!-- Identifiers - Start -->
-        <div class="col-md-12">
+        <!-- Hide / Show buttons -> Start -->
+        <div class="col-sm-12">
+          <button class="btn btn-primary hideShowButton" (click)="changeHideShowImages()">{{showHideImages}}</button>
+          <button class="btn btn-primary hideShowButton" (click)="changeHideShowIdentifiers()">
+            {{showHideOthersIdentifiers}}</button>
+        </div>
+        <!-- Hide / Show buttons -> End ->
+
+        <!-- Images - Start -->
+        <div class="col-md-12" [ngClass]="{hideThis: imagesHideShow}">
           <hr />
+          <h4>{{images}}</h4>
           <div class="row">
-            <h4><b>{{othersIdentifiers}}</b></h4>
-              <div *ngFor="let identifier of currentMedia.identifiers">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="identifier.id">{{identifier?.title}}</label>
-                      <input type="text" id="identifier.id"
-                             class="form-control" value="{{identifier?.input}}">
-                  </div>
+            <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
+              <img *ngIf="image.featured == 1" src="{{image.url}}" alt="featured image" class="col-sm-4">
+              <img *ngIf="image.featured != 1" src="{{image.url}}" alt="not featured image" class="col-sm-3">
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!-- Images - End -->
+
+        <!-- Identifiers - Start -->
+        <div class="col-md-12"  [ngClass]="{hideThis: identiriersHideShow}">
+          <hr />
+          <h4>{{othersIdentifiers}}</h4>
+          <div class="row">
+            <div *ngFor="let identifier of currentMedia.identifiers">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="identifiers">{{identifier?.title}}</label>
+                  <input type="text" id="identifiers"
+                         class="form-control" value="{{identifier?.input}}">
                 </div>
               </div>
+            </div>
           </div>
           <hr />
         </div>
@@ -179,7 +188,8 @@
           <div class="form-group">
             <label for="albumNamePersonal" *ngIf="currentMediaType == 'Audio'">{{album}}</label>
             <label for="albumNamePersonal" *ngIf="currentMediaType == 'Video'">{{name}}</label>
-            <input type="text" class="form-control" id="albumNamePersonal" value="{{currentMedia?.album}}{{currentMedia?.name}}">
+            <input type="text" class="form-control" id="albumNamePersonal"
+                   value="{{currentMedia?.album}}{{currentMedia?.name}}">
           </div>
         </div>
 
@@ -193,23 +203,10 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="first_release_yearPersonal">{{originalReleaseYear}}</label>
-            <input type="number" class="form-control" id="first_release_yearPersonal" value="{{currentMedia?.first_release_year}}">
+            <input type="number" class="form-control" id="first_release_yearPersonal"
+                   value="{{currentMedia?.first_release_year}}">
           </div>
         </div>
-
-        <!-- Images - Start -->
-        <div class="col-md-12">
-          <hr />
-          <h4><b>{{images}}</b></h4>
-          <div class="row">
-            <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
-              <img *ngIf="image.featured == 1" src="{{image.url}}" alt="featured image" class="col-sm-4">
-              <img *ngIf="image.featured != 1" src="{{image.url}}" alt="not featured image" class="col-sm-3">
-            </div>
-          </div>
-          <hr />
-        </div>
-        <!-- Images - End -->
 
         <div class="col-md-12">
           <div class="form-group">
@@ -221,7 +218,7 @@
 
         <div class="col-md-12">
           <div class="form-group">
-            <label for="personalNote">PERSONAL NOTE</label>
+            <label for="personalNote">{{personalNote}}</label>
             <br />
             <textarea rows="4" style="width: 100%" id="personalNote">{{currentMedia?.personal_note}}</textarea>
           </div>
@@ -256,16 +253,38 @@
           </div>
         </div>
 
-        <!-- Identifiers - Start -->
-        <div class="col-md-12">
+        <!-- Hide / Show buttons -> Start -->
+        <div class="col-sm-12">
+          <button class="btn btn-primary hideShowButton" (click)="changeHideShowImages()">{{showHideImages}}</button>
+          <button class="btn btn-primary hideShowButton" (click)="changeHideShowIdentifiers()">
+            {{showHideOthersIdentifiers}}</button>
+        </div>
+        <!-- Hide / Show buttons -> End ->
+
+        <!-- Images - Start -->
+        <div class="col-md-12" [ngClass]="{hideThis: imagesHideShow}">
           <hr />
+          <h4>{{images}}</h4>
           <div class="row">
-            <h4><b>{{othersIdentifiers}}</b></h4>
+            <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
+              <img *ngIf="image.featured == 1" src="{{image.url}}" alt="featured image" class="col-sm-4">
+              <img *ngIf="image.featured != 1" src="{{image.url}}" alt="not featured image" class="col-sm-3">
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!-- Images - End -->
+
+        <!-- Identifiers - Start -->
+        <div class="col-md-12"  [ngClass]="{hideThis: identiriersHideShow}">
+          <hr />
+          <h4>{{othersIdentifiers}}</h4>
+          <div class="row">
             <div *ngFor="let identifier of currentMedia.identifiers">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="identifier.idPersonal">{{identifier?.title}}</label>
-                  <input type="text" id="identifier.idPersonal"
+                  <label for="identifiersPersonal">{{identifier?.title}}</label>
+                  <input type="text" id="identifiersPersonal"
                          class="form-control" value="{{identifier?.input}}">
                 </div>
               </div>
@@ -277,7 +296,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label for="created_at">CREATED_AT</label>
+            <label for="created_at">{{createdAt}}</label>
             <input type="date" class="form-control" id="created_at"
                    value="{{currentMedia?.created_at?.date.slice(0,10)}}" disabled="disabled">
           </div>
@@ -285,7 +304,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label for="updated_at">UPDATED_AT</label>
+            <label for="updated_at">{{updatedAt}}</label>
             <input type="date" class="form-control" id="updated_at"
                    value="{{currentMedia?.updated_at?.date.slice(0,10)}}" disabled="disabled">
           </div>
@@ -293,15 +312,15 @@
 
         <div class="col-md-6 pull-right">
           <div class="form-group">
-            <label for="update">UPDATE</label>
-            <button class="btn btn-primary form-control" id="update">UPDATE</button>
+            <label for="update">{{update}}</label>
+            <button class="btn btn-primary form-control" id="update">{{update}}</button>
           </div>
         </div>
 
         <div class="col-md-6 pull-right">
           <div class="form-group">
-            <label for="delete">DELETE</label>
-            <button class="btn btn-primary form-control" id="delete">DELETE</button>
+            <label for="delete">{{delete}}</label>
+            <button class="btn btn-primary form-control" id="delete">{{delete }}</button>
           </div>
         </div>
 

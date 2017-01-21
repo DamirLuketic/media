@@ -22,6 +22,7 @@ export class ShowMediaComponent implements OnInit, DoCheck {
   // Default value for language
   public selectMedia: string;
   public mediaCategory: string;
+    // For dual value
     public band: string = 'Band';
     public director: string;
     public album: string = 'Album';
@@ -37,6 +38,18 @@ export class ShowMediaComponent implements OnInit, DoCheck {
   public label: string;
   public barcodeNumber: string;
   public othersIdentifiers: string;
+  public showHideImages: string;
+  public showHideOthersIdentifiers: string;
+    // For personal form
+    public personalNote: string;
+    public delete: string;
+    public update: string;
+    public createdAt: string;
+    public updatedAt: string;
+
+  // Variables for hide component
+  public imagesHideShow: boolean = true;
+  public identiriersHideShow: boolean = true;
 
   constructor(
       private currentService: CurrentService,
@@ -44,6 +57,22 @@ export class ShowMediaComponent implements OnInit, DoCheck {
   ) { }
 
   ngOnInit() {
+  }
+
+  changeHideShowImages(){
+    if(this.imagesHideShow){
+      this.imagesHideShow = false;
+    }else {
+      this.imagesHideShow = true;
+    }
+  }
+
+  changeHideShowIdentifiers(){
+    if(this.identiriersHideShow){
+      this.identiriersHideShow = false;
+    }else {
+      this.identiriersHideShow = true;
+    }
   }
 
   ngDoCheck(){
@@ -65,6 +94,21 @@ export class ShowMediaComponent implements OnInit, DoCheck {
         this.label = 'Verlag';
         this.barcodeNumber = 'Barcode nummer';
         this.othersIdentifiers = 'Andere Kennungen';
+        this.personalNote = 'Persönliche Anmerkung';
+          if(this.imagesHideShow){
+            this.showHideImages = 'Bilder anzeigen';
+          }else {
+            this.showHideImages = 'Bilder ausblenden';
+          }
+          if(this.identiriersHideShow){
+            this.showHideOthersIdentifiers = 'Andere Identifikatoren anzeigen';
+          }else{
+            this.showHideOthersIdentifiers = 'Andere Identifikatoren ausblenden';
+          }
+        this.delete = 'Löschen';
+        this.update = 'Aktualisieren';
+        this.createdAt = 'Hergestellt am:';
+        this.updatedAt = 'Aktualisiert am:';
         break;
       case 'hr':
         this.selectMedia = 'Izaberite medij';
@@ -82,6 +126,21 @@ export class ShowMediaComponent implements OnInit, DoCheck {
         this.label = 'Izdavač';
         this.barcodeNumber = 'Bar kod broj';
         this.othersIdentifiers = 'Ostali identifikatori';
+        this.personalNote = 'Osobna bilješka';
+          if(this.imagesHideShow){
+            this.showHideImages = 'Prikaži slike';
+          }else {
+            this.showHideImages = 'Sakrij slike';
+          }
+          if(this.identiriersHideShow){
+            this.showHideOthersIdentifiers = 'Prikaži druge identifikatore';
+          }else{
+            this.showHideOthersIdentifiers = 'Sakrij druge identifikatore';
+          }
+        this.delete = 'Obriši';
+        this.update = 'Ažuriraj';
+        this.createdAt = 'Izrađeno u:';
+        this.updatedAt = 'Obnovljeno u:';
         break;
       default:
         this.selectMedia = 'Select media';
@@ -99,6 +158,22 @@ export class ShowMediaComponent implements OnInit, DoCheck {
         this.label = 'Label';
         this.barcodeNumber = 'Barcode number';
         this.othersIdentifiers = 'Others identifiers';
+        this.personalNote = 'Personal note';
+          if(this.imagesHideShow){
+            this.showHideImages = 'Show images';
+          }else {
+            this.showHideImages = 'Hide images';
+          }
+          if(this.identiriersHideShow){
+            this.showHideOthersIdentifiers = 'Show others identifiers';
+          }else{
+            this.showHideOthersIdentifiers = 'Hide Others identifiers';
+          }
+        this.delete = 'Delete';
+        this.update = 'Update';
+        this.createdAt = 'Created at:';
+        this.updatedAt = 'Updated at:';
+        this
     }
 
     // Set current media type and current purpose
