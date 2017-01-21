@@ -1,10 +1,10 @@
-import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
+import {Component, OnInit, DoCheck, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { LanguageService } from "../shared/services/language.service";
 import { AuthService } from "../shared/services/auth.service";
 import { UpdateAuth } from "../shared/class/update-auth";
-import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {RootService} from "../shared/services/root.service";
 
 @Component({
   selector: 'app-personal',
@@ -14,7 +14,8 @@ import {Subscription} from "rxjs";
 export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
 
   // Subscription
-  private subscription: Subscription = null;
+  private updateSubscription: Subscription = null;
+  private uploadImageSubscription: Subscription = null;
 
   // Basic value for form
   public personalForm: FormGroup;
@@ -25,33 +26,33 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
   public newPasswordTitle: string;
   public newPasswordRepeatTitle: string;
   public update: string;
+  public uploadNewImage: string;
 
   // Default values for form input
   public name: string;
   public newPasswordPlaceholder: string;
 
-  // Image src value
-  // public imageSrc: string = null;
-  public imageSrc: string = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Crystal_personal.svg/2000px-Crystal_personal.svg.png';
-
   constructor(
       private formBuilder: FormBuilder,
       private languageService: LanguageService,
       private authService: AuthService,
-      private router: Router
+      private rootService: RootService
   ) { }
 
-  ngOnInit() {
-    if(this.authService.auth != null){
-      this.name = this.authService.auth.name;
-    }
-
-    // set default form values
+  // Set default form values
+  setForm(){
     this.personalForm = this.formBuilder.group({
       'name': [this.name, Validators.required],
       'newPassword': [''],
       'newPasswordRepeat': ['']
     });
+  }
+
+  ngOnInit() {
+    if(this.authService.auth != null){
+      this.name = this.authService.auth.name;
+    }
+    this.setForm();
   }
 
   ngDoCheck(){
@@ -63,6 +64,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.newPasswordRepeatTitle = 'Wiederhole das neue Passwort';
         this.update = 'Aktualisieren';
         this.newPasswordPlaceholder = 'Optional (mindestens 6 Zeichen)';
+        this.uploadNewImage = 'Neues Bild hochladen';
         break;
       case 'en':
         this.personal = 'Personal';
@@ -71,6 +73,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.newPasswordRepeatTitle = 'Repeat new password';
         this.update = 'Update';
         this.newPasswordPlaceholder = 'Optional (min. 6. characters)';
+        this.uploadNewImage = 'Upload new image';
         break;
       case 'hr':
         this.personal = 'Osobno';
@@ -79,6 +82,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.newPasswordRepeatTitle = 'Ponovite novu zaporku';
         this.update = 'Ažuriraj';
         this.newPasswordPlaceholder = 'Opcija (min. 6. znakova)';
+        this.uploadNewImage = 'Učitaj novu sliku';
         break;
       default:
         this.personal = 'Personal';
@@ -87,6 +91,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.newPasswordRepeatTitle = 'Repeat new password';
         this.update = 'Update';
         this.newPasswordPlaceholder = 'Optional (min. 6. characters)';
+        this.uploadNewImage = 'Upload new image';
     }
   }
 
@@ -120,7 +125,6 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   onSubmit(){
-
     // Collect form data
     const formValue = this.personalForm.value;
 
@@ -132,13 +136,13 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
       const updateAuth: UpdateAuth = this.personalForm.value;
       updateAuth.id = this.authService.auth.id;
 
-      this.subscription = this.authService.update(updateAuth).subscribe(
+      this.updateSubscription = this.authService.update(updateAuth).subscribe(
           (data: any) => {
             console.log(data),
                 this.authService.auth.name = updateAuth.name,
                 this.name = updateAuth.name,
                 alert('Data updated'),
-                this.router.navigate(['/home']);
+                this.setForm();
           },
           error => console.log(error)
       );
@@ -147,10 +151,47 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
     }
   }
 
-  // Remove subscription
+  // Set user image
+  userImage(){
+    // Collect src from user data
+    let userImage: string = this.authService.auth.image_url;
+    // Variable for image src
+    let imageSrc: string;
+
+    if(userImage != null){
+      imageSrc = this.rootService.apiRoute + '/images/users/' + this.authService.auth.id + '/' + userImage;
+    }else{
+      imageSrc = './assets/images/placeholders/userImagePlaceholder.jpg';
+    }
+    return imageSrc;
+  }
+
+  // Upload user image
+  fileUpload(event) {
+
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('photo', file, file.name);
+
+      this.uploadImageSubscription = this.authService.updateImage(this.authService.auth.id, formData).subscribe(
+          (data: string) => {
+            this.authService.auth.image_url = data
+          },
+          error => console.log(error)
+      );
+    }
+  }
+
+  // Remove subscriptions
   ngOnDestroy(){
-    if(this.subscription != null){
-      this.subscription.unsubscribe();
+    if(this.updateSubscription != null){
+      this.updateSubscription.unsubscribe();
+    }
+
+    if(this.uploadImageSubscription != null){
+      this.uploadImageSubscription.unsubscribe();
     }
   }
 

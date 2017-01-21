@@ -20,5 +20,8 @@ recycle user-> registerLogin -> from couple of app
 // polymorph picture table
 // order by
 
+// For grade -> click positive -> check / RESULT -> if positive remove positive-> if negative or null update to positive
+             -> click negative -> check / RESULT -> if negative remove negative-> if positive or null update to negative
+
 // angular2/laravel
 

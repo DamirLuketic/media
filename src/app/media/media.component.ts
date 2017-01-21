@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import { LanguageService } from "../shared/services/language.service";
 import {CurrentService} from "../shared/services/current.service";
 
@@ -7,7 +7,7 @@ import {CurrentService} from "../shared/services/current.service";
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.css']
 })
-export class MediaComponent implements OnInit, DoCheck {
+export class MediaComponent implements OnInit, DoCheck, OnDestroy {
 
   // Default values for menu title
   public forChange: string;
@@ -54,10 +54,21 @@ export class MediaComponent implements OnInit, DoCheck {
   // Set current media to 'Audio'
   setMediaToAudio(){
     this.currentService.currentMediaType = 'Audio';
+    this.currentService.currentMedia = [];
+    this.currentService.currentAudioId = 0;
+    this.currentService.currentVideoId = 0;
   }
 
   // Set current media to 'Video'
   setMediaToVideo(){
     this.currentService.currentMediaType = 'Video';
+    this.currentService.currentMedia = [];
+    this.currentService.currentVideoId = 0;
+    this.currentService.currentAudioId = 0;
+  }
+
+  ngOnDestroy(){
+    this.currentService.currentVideoId = 0;
+    this.currentService.currentAudioId = 0;
   }
 }

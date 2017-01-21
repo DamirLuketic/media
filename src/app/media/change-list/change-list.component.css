@@ -9,3 +9,8 @@ ul > li:hover {
 .currentView {
     background-color: orange;
 }
+
+/* CSS for hide component */
+.hideThis {
+    visibility: hidden;
+}

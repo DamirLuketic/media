@@ -22,7 +22,7 @@ export class ContactService {
   contactSend(contact: Contact) {
     const body = JSON.stringify(contact);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.rootService.apiRoute + 'send_email/' + contact, body, {headers: headers})
+    return this.http.post(this.rootService.apiRoute + '/api/send_email/' + contact, body, {headers: headers})
         .map((response: Response) => response.json())
         .catch(this.handleError);
   }

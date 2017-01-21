@@ -65,6 +65,11 @@ export class AllowedListComponent implements OnInit, DoCheck, OnDestroy {
     // Set current view media from "current" service
     this.currentViewMedia = this.currentService.currentMediaType;
 
+    // Set current media id -> must set through service to reset values,
+      // when move from different media categories on same component (when set different category reset "id")
+    this.currentAudioId = this.currentService.currentAudioId;
+    this.currentVideoId = this.currentService.currentVideoId;
+
     // Part for translate
     switch (this.languageService.getLanguage()){
       case 'de':
@@ -84,9 +89,9 @@ export class AllowedListComponent implements OnInit, DoCheck, OnDestroy {
   // Set current media id and current media
   setCurrentMedia(media){
     if(this.currentViewMedia == 'Audio'){
-      this.currentAudioId = media.id;
+      this.currentService.currentAudioId = media.id;
     }else if(this.currentViewMedia == 'Video'){
-      this.currentVideoId = media.id;
+      this.currentService.currentVideoId = media.id;
     };
 
     this.currentService.currentMedia = media;

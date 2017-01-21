@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class RootService {
 
-  // route for local api
-  apiRoute: string = 'http://localhost/media_api/public/api/';
+  // Route for local api
+  // apiRoute: string = 'http://localhost/media_api/public';
 
-  // route for local api
-  // apiRoute: string = 'http://www.consilium-europa.com/pages/media_api/public/api/';
+  // Route for remote api
+  apiRoute: string = 'http://www.consilium-europa.com/pages/media_api/public';
 
   constructor() { }
 

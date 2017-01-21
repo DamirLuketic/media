@@ -6,6 +6,20 @@ form .ng-invalid{
     border: 1px solid crimson;
 }
 
-#personalImage {
+#imageShow {
     width: 20rem;
+    margin-bottom: 2rem;
+}
+
+#imageUpload {
+    width: 80%;
+}
+
+/* Css for upload form */
+#uploadImage {
+    visibility: hidden;
+}
+
+#uploadImageShow {
+    background-color: #1CB94A;
 }

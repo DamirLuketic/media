@@ -18,14 +18,14 @@ export class AudioService {
 
   // Get audio categories -> available data for all user so we use "GET" method
   getAudioCategories(){
-    return this.http.get(this.rootService.apiRoute + 'audio_categories').
+    return this.http.get(this.rootService.apiRoute + '/api/audio_categories').
         map((response: Response) => response.json()).
         catch(this.handleError);;
   }
 
   // Get Audio for change -> available data for all user so we use "GET" method
   getAudioForChange(){
-    return this.http.get(this.rootService.apiRoute + 'audio_for_change').
+    return this.http.get(this.rootService.apiRoute + '/api/audio_for_change').
         map((response: Response) => response.json()).
         catch(this.handleError);;
   }
@@ -34,7 +34,7 @@ export class AudioService {
     collectAudioAllowed(user_id: number){
       const body = JSON.stringify(user_id);
       const headers = new Headers({'Content-Type': 'application/json'});
-      return this.http.post(this.rootService.apiRoute + 'audio_allowed/' + user_id, body, {headers: headers}).
+      return this.http.post(this.rootService.apiRoute + '/api/audio_allowed/' + user_id, body, {headers: headers}).
           map((response: Response) => response.json()).
           catch(this.handleError);
     }
@@ -43,7 +43,7 @@ export class AudioService {
     collectAudioPersonal(user_id: number){
       const body = JSON.stringify(user_id);
       const headers = new Headers({'Content-Type': 'application/json'});
-      return this.http.post(this.rootService.apiRoute + 'audio_personal/' + user_id, body, {headers: headers}).
+      return this.http.post(this.rootService.apiRoute + '/api/audio_personal/' + user_id, body, {headers: headers}).
           map((response: Response) => response.json()).
           catch(this.handleError);
     }

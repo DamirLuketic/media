@@ -1,0 +1,9 @@
+/* "Disable" input through CSS */
+#audioChangeAllowedForm > form > fieldset > div > div {
+    pointer-events: none;
+}
+
+/* Enable input for send offer */
+#offer {
+    pointer-events: auto;
+}

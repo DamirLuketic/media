@@ -1,6 +1,311 @@
-<p>
-  show-media works!
-</p>
-<p>{{currentMediaType}}</p>
-<p>{{currentPurpose}}</p>
-<p>{{currentMedia?.name}}{{currentMedia?.album}}</p>
+  <!-- Show for changeable and available media -> Template drive approach -> Start -->
+  <div class="row" id="audioChangeAllowedForm" *ngIf="currentPurpose != 'Personal'">
+
+    <form disabled="disabled">
+      <fieldset>
+        <legend>{{currentMedia?.album}}{{currentMedia?.name}}
+          <span *ngIf="!currentMedia.album && !currentMedia.name">{{selectMedia}}</span>
+        </legend>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="category">{{mediaCategory}}</label>
+            <input type="text" class="form-control" id="category"
+                   value="{{currentMedia?.audio_category_id}}{{currentMedia?.video_category_id}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="condition">{{condition}}</label>
+            <input type="text" class="form-control" id="condition" value="{{currentMedia?.condition_id}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="bandDirector" *ngIf="currentMediaType == 'Audio'">{{band}}</label>
+            <label for="bandDirector" *ngIf="currentMediaType == 'Video'">{{director}}</label>
+            <input type="text" class="form-control" id="bandDirector"
+                   value="{{currentMedia?.band}}{{currentMedia?.director}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="albumName" *ngIf="currentMediaType == 'Audio'">{{album}}</label>
+            <label for="albumName" *ngIf="currentMediaType == 'Video'">{{name}}</label>
+            <input type="text" class="form-control" id="albumName"
+                   value="{{currentMedia?.album}}{{currentMedia?.name}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="year">{{year}}</label>
+            <input type="number" class="form-control" id="year" value="{{currentMedia?.year}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="first_release_year">{{originalReleaseYear}}</label>
+            <input type="number" class="form-control" id="first_release_year" value="{{currentMedia?.first_release_year}}">
+          </div>
+        </div>
+
+        <!-- Images - Start -->
+        <div class="col-md-12">
+          <hr />
+            <h4><b>{{images}}</b></h4>
+            <div class="row">
+              <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
+                <img *ngIf="image.featured == 1" src="{{image.url}}" alt="featured image" class="col-sm-4">
+                <img *ngIf="image.featured != 1" src="{{image.url}}" alt="not featured image" class="col-sm-3">
+              </div>
+            </div>
+          <hr />
+        </div>
+        <!-- Images - End -->
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="description">{{description}}</label>
+            <br />
+            <textarea rows="6" style="width: 100%" id="description">{{currentMedia?.description}}</textarea>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
+          <div class="form-group">
+            <label for="label">{{label}}</label>
+            <input type="text" class="form-control" id="label" value="{{currentMedia?.label}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="barcode_numbers">{{barcodeNumber}}</label>
+            <input type="text" class="form-control" id="barcode_numbers" value="{{currentMedia?.barcode_numbers}}">
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
+          <div class="form-group">
+            <label for="cat">CAT</label>
+            <input type="text" class="form-control" id="cat" value="{{currentMedia?.cat}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="owner_name">{{owner}}</label>
+            <input type="text" class="form-control" id="owner_name" value="{{currentMedia?.owner_name}}">
+          </div>
+        </div>
+
+        <!-- Identifiers - Start -->
+        <div class="col-md-12">
+          <hr />
+          <div class="row">
+            <h4><b>{{othersIdentifiers}}</b></h4>
+              <div *ngFor="let identifier of currentMedia.identifiers">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="identifier.id">{{identifier?.title}}</label>
+                      <input type="text" id="identifier.id"
+                             class="form-control" value="{{identifier?.input}}">
+                  </div>
+                </div>
+              </div>
+          </div>
+          <hr />
+        </div>
+        <!-- Identifiers - End -->
+
+        <div class="col-md-6" *ngIf="currentPurpose == 'Allowed'">
+          <div class="form-group">
+            <label for="for_change">{{changeStatus}}</label>
+            <input type="text" class="form-control" id="for_change" value="{{currentMedia?.for_change}}">
+          </div>
+        </div>
+
+        <div class="col-md-6 pull-right">
+          <div class="form-group">
+            <label for="offer">{{sendOffer}}</label>
+            <button class="btn btn-primary form-control" id="offer">{{sendOffer}}</button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+  <!-- Show for changeable and available media -> Template drive approach -> End -->
+
+  <!-- Show for personal media -> Data drive approach -> Start -->
+  <div class="row" id="audioPersonalForm" *ngIf="currentPurpose == 'Personal'">
+
+    <form>
+      <fieldset>
+        <legend>{{currentMedia?.album}}{{currentMedia?.name}}
+          <span *ngIf="!currentMedia.album && !currentMedia.name">{{selectMedia}}</span>
+        </legend>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="categoryPersonal">{{mediaCategory}}</label>
+            <input type="text" class="form-control" id="categoryPersonal"
+                   value="{{currentMedia?.audio_category_id}}{{currentMedia?.video_category_id}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="conditionPersonal">{{condition}}</label>
+            <input type="text" class="form-control" id="conditionPersonal" value="{{currentMedia?.condition_id}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="bandDirectorPersonal" *ngIf="currentMediaType == 'Audio'">{{band}}</label>
+            <label for="bandDirectorPersonal" *ngIf="currentMediaType == 'Video'">{{director}}</label>
+            <input type="text" class="form-control" id="bandDirectorPersonal"
+                   value="{{currentMedia?.band}}{{currentMedia?.director}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="albumNamePersonal" *ngIf="currentMediaType == 'Audio'">{{album}}</label>
+            <label for="albumNamePersonal" *ngIf="currentMediaType == 'Video'">{{name}}</label>
+            <input type="text" class="form-control" id="albumNamePersonal" value="{{currentMedia?.album}}{{currentMedia?.name}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="yearPersonal">{{year}}</label>
+            <input type="number" class="form-control" id="yearPersonal" value="{{currentMedia?.year}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="first_release_yearPersonal">{{originalReleaseYear}}</label>
+            <input type="number" class="form-control" id="first_release_yearPersonal" value="{{currentMedia?.first_release_year}}">
+          </div>
+        </div>
+
+        <!-- Images - Start -->
+        <div class="col-md-12">
+          <hr />
+          <h4><b>{{images}}</b></h4>
+          <div class="row">
+            <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
+              <img *ngIf="image.featured == 1" src="{{image.url}}" alt="featured image" class="col-sm-4">
+              <img *ngIf="image.featured != 1" src="{{image.url}}" alt="not featured image" class="col-sm-3">
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!-- Images - End -->
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="descriptionPersonal">{{description}}</label>
+            <br />
+            <textarea rows="6" style="width: 100%" id="descriptionPersonal">{{currentMedia?.description}}</textarea>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="personalNote">PERSONAL NOTE</label>
+            <br />
+            <textarea rows="4" style="width: 100%" id="personalNote">{{currentMedia?.personal_note}}</textarea>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
+          <div class="form-group">
+            <label for="labelPersonal">{{label}}</label>
+            <input type="text" class="form-control" id="labelPersonal" value="{{currentMedia?.label}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="barcode_numbersPersonal">{{barcodeNumber}}</label>
+            <input type="text" class="form-control" id="barcode_numbersPersonal"
+                   value="{{currentMedia?.barcode_numbers}}">
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
+          <div class="form-group">
+            <label for="catPersonal">CAT</label>
+            <input type="text" class="form-control" id="catPersonal" value="{{currentMedia?.cat}}">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="for_changePersonal">{{changeStatus}}</label>
+            <input type="text" class="form-control" id="for_changePersonal" value="{{currentMedia?.for_change}}">
+          </div>
+        </div>
+
+        <!-- Identifiers - Start -->
+        <div class="col-md-12">
+          <hr />
+          <div class="row">
+            <h4><b>{{othersIdentifiers}}</b></h4>
+            <div *ngFor="let identifier of currentMedia.identifiers">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="identifier.idPersonal">{{identifier?.title}}</label>
+                  <input type="text" id="identifier.idPersonal"
+                         class="form-control" value="{{identifier?.input}}">
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+        <!-- Identifiers - End -->
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="created_at">CREATED_AT</label>
+            <input type="date" class="form-control" id="created_at"
+                   value="{{currentMedia?.created_at?.date.slice(0,10)}}" disabled="disabled">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="updated_at">UPDATED_AT</label>
+            <input type="date" class="form-control" id="updated_at"
+                   value="{{currentMedia?.updated_at?.date.slice(0,10)}}" disabled="disabled">
+          </div>
+        </div>
+
+        <div class="col-md-6 pull-right">
+          <div class="form-group">
+            <label for="update">UPDATE</label>
+            <button class="btn btn-primary form-control" id="update">UPDATE</button>
+          </div>
+        </div>
+
+        <div class="col-md-6 pull-right">
+          <div class="form-group">
+            <label for="delete">DELETE</label>
+            <button class="btn btn-primary form-control" id="delete">DELETE</button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+  <!-- Show for personal media -> Data drive approach -> End -->

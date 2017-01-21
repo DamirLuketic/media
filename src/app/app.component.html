@@ -22,11 +22,11 @@
 
       <li><a [routerLink] = "['/home']" routerLinkActive="active">{{home}}</a></li>
       <li *ngIf="!isAuth()"><a [routerLink] = "['/registerLogin']" routerLinkActive="active">{{registerLogin}}</a></li>
-      <li *ngIf="isAuth()" style="cursor: pointer"><a (click)="logoutFunction()">{{logout}}</a></li>
       <li *ngIf="isAuth()"><a [routerLink] = "['/personal']" routerLinkActive="active">{{personal}}</a></li>
       <li *ngIf="isAuth()"><a [routerLink] = "['/media']" routerLinkActive="active">{{media}}</a></li>
       <li *ngIf="isAuth()"><a [routerLink] = "['/users']" routerLinkActive="active">{{users}}</a></li>
       <li><a [routerLink] = "['/contact']" routerLinkActive="active">{{contact}}</a></li>
+      <li *ngIf="isAuth()" style="cursor: pointer"><a (click)="logoutFunction()">{{logout}}</a></li>
     </ul>
 
     <!-- menu for large display -> without refresh -> End -->
@@ -47,11 +47,11 @@
 
       <li><a [routerLink] = "['/home']" routerLinkActive="active">{{home}}</a></li>
       <li *ngIf="!isAuth()"><a [routerLink] = "['/registerLogin']" routerLinkActive="active">{{registerLogin}}</a></li>
-      <li *ngIf="isAuth()" style="cursor: pointer"><a (click)="logoutFunction()">{{logout}}</a></li>
       <li *ngIf="isAuth()"><a [routerLink] = "['/personal']" routerLinkActive="active">{{personal}}</a></li>
       <li *ngIf="isAuth()"><a [routerLink] = "['/media']" routerLinkActive="active">{{media}}</a></li>
       <li *ngIf="isAuth()"><a [routerLink] = "['/users']" routerLinkActive="active">{{users}}</a></li>
       <li><a [routerLink] = "['/contact']" routerLinkActive="active">{{contact}}</a></li>
+      <li *ngIf="isAuth()" style="cursor: pointer"><a (click)="logoutFunction()">{{logout}}</a></li>
     </ul>
 
     <!-- menu for small display -> with refresh -> For future work -> End -->

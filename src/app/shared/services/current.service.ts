@@ -14,6 +14,10 @@ export class CurrentService {
   // Current media
   public currentMedia = [];
 
+  // Current media id
+  public currentAudioId: number;
+  public currentVideoId: number;
+
   constructor() { }
 
 }
