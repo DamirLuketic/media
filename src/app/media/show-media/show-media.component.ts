@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import {CurrentService} from "../../shared/services/current.service";
-import {LanguageService} from "../../shared/services/language.service";
-import {AudioForChange} from "../../shared/class/audio-for-change";
+import { CurrentService } from "../../shared/services/current.service";
+import { LanguageService } from "../../shared/services/language.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-show-media',
@@ -18,6 +18,10 @@ export class ShowMediaComponent implements OnInit, DoCheck {
 
   // Variable for current media (receive current media)
   public currentMedia = [];
+
+  // Default value for personal media forms (data driven approach)
+  public personalAudioForm: FormGroup = this.formBuilder.group({})
+
 
   // Default value for language
   public selectMedia: string;
@@ -53,7 +57,8 @@ export class ShowMediaComponent implements OnInit, DoCheck {
 
   constructor(
       private currentService: CurrentService,
-      private languageService: LanguageService
+      private languageService: LanguageService,
+      private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
