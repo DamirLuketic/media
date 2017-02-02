@@ -25,3 +25,6 @@ recycle user-> registerLogin -> from couple of app
 
 // angular2/laravel
 
+// Media - part
+-> router outlet is set for list (col-4)
+-> "show-media" component is set for showing media details (col-8)

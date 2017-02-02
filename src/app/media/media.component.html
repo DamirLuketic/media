@@ -30,7 +30,7 @@
                         <ul class="dropdown-menu">
                             <li><a (click)="setMediaToAudio()" [routerLink] = "['/media', 'personalList']">Audio</a></li>
                             <li><a (click)="setMediaToVideo()" [routerLink] = "['/media', 'personalList']">Video</a></li>
-                            <button class="btn btn-info" [routerLink]="['/media', 'newMedia']">{{newMedia}}</button>
+                            <button class="btn btn-info" [routerLink]="['/newMedia']">{{newMedia}}</button>
                         </ul>
                     </li>
                     <!-- Dropdown for "personal list" -> End -->
@@ -42,18 +42,17 @@
 
 <!-- Outlet for media view -> Start -->
     <!-- Show media list -> Start -->
-    <div class="row">
-        <div class="col-md-4">
-            <router-outlet></router-outlet>
+        <div class="row">
+            <div class="col-md-4">
+                <router-outlet></router-outlet>
+            </div>
+            <!-- Show media list -> End -->
+            <!-- Show media details -> Start -->
+            <div class="col-md-8">
+                <app-show-media></app-show-media>
+            </div>
+            <!-- Show media details -> End -->
         </div>
-        <!-- Show media list -> End -->
-        <!-- Show media details -> Start -->
-        <div class="col-md-8">
-            <app-show-media></app-show-media>
-        </div>
-        <!-- Show media details -> End -->
-    </div>
-
 <!-- Outlet for media view -> End -->
 
 

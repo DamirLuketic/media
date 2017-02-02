@@ -15,6 +15,7 @@ export class AppComponent implements DoCheck{
   public registerLogin: string = 'Register\Login';
   public logout: string = 'Logout';
   public personal: string = 'Personal';
+  public newMedia: string = 'New Media';
   public media: string = 'Media';
   public users: string = 'Users';
   public contact: string = 'Contact';
@@ -33,6 +34,7 @@ export class AppComponent implements DoCheck{
       this.registerLogin = 'Registrieren \\ Anmelden';
       this.logout = 'Ausloggen';
       this.personal = 'Persönlich';
+      this.newMedia = 'Neue Medien';
       this.media = 'Medien';
       this.users = 'Benutzer';
       this.contact = 'Kontakt';
@@ -41,6 +43,7 @@ export class AppComponent implements DoCheck{
       this.registerLogin = 'Registracija \\ Prijava';
       this.logout = 'Odjava';
       this.personal = 'Privatno';
+      this.newMedia = 'Novi Medij';
       this.media = 'Mediji';
       this.users = 'Korisnici';
       this.contact = 'Kontakt';
@@ -49,6 +52,7 @@ export class AppComponent implements DoCheck{
       this.registerLogin = 'Register \\ Login';
       this.logout = 'Logout';
       this.personal = 'Personal';
+      this.newMedia = 'New Media';
       this.media = 'Media';
       this.users = 'Users';
       this.contact = 'Contact';

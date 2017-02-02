@@ -1,0 +1,12 @@
+#basicContainer {
+    margin-top: 3rem;
+}
+
+/* Css for upload form */
+.uploadImage {
+    visibility: hidden;
+}
+
+.uploadImageShow {
+    background-color: #1CB94A;
+}

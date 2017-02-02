@@ -1,0 +1,119 @@
+<div class="container" id="basicContainer">
+    <div class="row">
+
+         <form [formGroup]="newMediaForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+            <fieldset>
+
+                <legend><button class="btn btn-primary" (click)="changeMediaType()">{{mediaType}}</button></legend>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="category">{{category}}</label>
+                        <input type="text" class="form-control" id="category" formControlName="category">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="condition">{{condition}}</label>
+                        <input type="text" class="form-control" id="condition" formControlName="condition">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="bandDirector">{{bandDirector}}</label>
+                        <input type="text" class="form-control" id="bandDirector" formControlName="bandDirector">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="albumName">{{albumName}}</label>
+                        <input type="text" class="form-control" id="albumName" formControlName="albumName">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="year">{{year}}</label>
+                        <input type="number" class="form-control" id="year" formControlName="year">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="firstReleaseYear">{{firstReleaseYear}}</label>
+                        <input type="number" class="form-control" id="firstReleaseYear"
+                               formControlName="firstReleaseYear">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{description}}</label>
+                        <br />
+                        <textarea rows="6" style="width: 100%" id="description" formControlName="description">
+                  </textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="personalNote">{{personalNote}}</label>
+                        <br />
+                        <textarea rows="4" style="width: 100%" id="personalNote" formControlName="personalNote"></textarea>
+                    </div>
+                </div>
+
+                <!-- Set image part -> Start -->
+                <div class="col-md-12">
+                    <div class="form-group" id="imageUpload">
+                        <label for="uploadImage" class="btn uploadImageShow" id="uploadImageShow">
+                            SELECT IMAGES</label>
+                        <input type="file" class="uploadImage" id="uploadImage"
+                               (change)="fileUpload($event)" accept=".jpg,.png" multiple="multiple">
+                    </div>
+                </div>
+                <!-- Set image part -> End -->
+
+                <div class="col-md-6" *ngIf="mediaType == 'Audio'">
+                    <div class="form-group">
+                        <label for="label">{{label}}</label>
+                        <input type="text" class="form-control" id="label" formControlName="label">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="barcodeNumber">{{barcodeNumber}}</label>
+                        <input type="text" class="form-control" id="barcodeNumber"
+                               formControlName="barcodeNumber">
+                    </div>
+                </div>
+
+                <div class="col-md-6" *ngIf="mediaType == 'Audio'">
+                    <div class="form-group">
+                        <label for="cat">{{cat}}</label>
+                        <input type="text" class="form-control" id="cat" formControlName="cat">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="change">{{change}}</label>
+                        <input type="text" class="form-control" id="change" formControlName="change">
+                    </div>
+                </div>
+
+                <div class="col-md-6 pull-right">
+                    <div class="form-group">
+                        <label for="create">{{create}}</label>
+                        <input type="submit" class="btn btn-primary form-control" id="create" value="{{create}}">
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

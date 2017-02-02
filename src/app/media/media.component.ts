@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import { LanguageService } from "../shared/services/language.service";
-import {CurrentService} from "../shared/services/current.service";
+import { CurrentService } from "../shared/services/current.service";
 
 @Component({
   selector: 'app-media',
