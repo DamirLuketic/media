@@ -28,7 +28,7 @@ import { AudioService } from "./shared/services/audio.service";
 import { VideoService } from "./shared/services/video.service";
 import { CurrentService } from "./shared/services/current.service";
 import { ShowMediaComponent } from "./media/show-media/show-media.component";
-import {MediaService} from "./shared/services/media.service";
+import { MediaService } from "./shared/services/media.service";
 
 
 @NgModule({

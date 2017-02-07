@@ -1,6 +1,8 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {LanguageService} from "../shared/services/language.service";
+import {MediaService} from "../shared/services/media.service";
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-new-media',
@@ -46,16 +48,22 @@ export class NewMediaComponent implements OnInit, DoCheck {
   // Default value for images files
   public imagesFiles = new FormData();
 
+  // Variables for info and error
+  public uploadError: string;
+  public selectImages: string;
+
   constructor(
       private formBuilder: FormBuilder,
-      private languageService: LanguageService
+      private languageService: LanguageService,
+      private mediaService: MediaService,
+      private authService: AuthService
   ) { }
 
   ngOnInit() {
   }
 
   ngDoCheck(){
-    // Values for form label
+    // Values for form label, info and errors
     switch (this.languageService.getLanguage()){
       case 'de':
         this.category = 'Kategorie'
@@ -76,6 +84,9 @@ export class NewMediaComponent implements OnInit, DoCheck {
         this.cat = 'CAT';
         this.change = 'Für den Austausch';
         this.create = 'Erstellen';
+        // Info and errors
+          this.uploadError = 'Max. 3. Abbildungen';
+          this.selectImages = 'Wählen Sie Bilder';
         break;
       case 'hr':
         this.category = 'Kategorija'
@@ -96,6 +107,9 @@ export class NewMediaComponent implements OnInit, DoCheck {
         this.cat = 'CAT';
         this.change = 'Za razmjenu';
         this.create = 'Unesi';
+        // Info and errors
+          this.uploadError = 'Max. 3. slike';
+          this.selectImages = 'Odaberite slike';
         break;
       default:
         this.category = 'Category'
@@ -116,6 +130,9 @@ export class NewMediaComponent implements OnInit, DoCheck {
         this.cat = 'CAT';
         this.change = 'For change';
         this.create = 'Create';
+        // Info and errors
+          this.uploadError = 'Max. 3. images';
+          this.selectImages = 'Select images';
     }
   }
 
@@ -134,7 +151,7 @@ export class NewMediaComponent implements OnInit, DoCheck {
     if (fileList.length > 0) {
       if(fileList.length > 3){
         this.imagesFiles = null;
-        alert('MAX. 3. IMAGES');
+        alert(this.uploadError);
       }else{
       let imagesData: FormData = new FormData();
       imagesData.append('photoFeatured', fileList[0], fileList[0].name);
@@ -154,10 +171,24 @@ export class NewMediaComponent implements OnInit, DoCheck {
 
     // Retrieve form data
     let formValue = this.newMediaForm.value;
+    formValue['type'] = this.mediaType;
+    formValue['user_id'] = this.authService.auth.id;
 
     // Retrieve images files
     let imagesFiles = this.imagesFiles;
 
-    console.log(imagesFiles);
+    // Variable for media id
+    let mediaId: number;
+
+    // Send basic data, and retrieve media id
+    this.mediaService.newMedia(formValue).subscribe(
+        (data: number) => {
+            this.mediaService.newMediaImages(this.mediaType, data, imagesFiles).subscribe(
+                (data: any) => this.imagesFiles = null,
+                error => console.log(error)
+            )
+        },
+        error => console.log(error)
+    )
   }
 }

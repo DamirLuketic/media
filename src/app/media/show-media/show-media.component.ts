@@ -1,6 +1,7 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { CurrentService } from "../../shared/services/current.service";
 import { LanguageService } from "../../shared/services/language.service";
+import { RootService } from "../../shared/services/root.service";
 
 @Component({
   selector: 'app-show-media',
@@ -17,6 +18,9 @@ export class ShowMediaComponent implements OnInit, DoCheck {
 
   // Variable for current media (receive current media)
   public currentMedia = [];
+
+  // Variable for basic root path (usage for show image)
+  public basicURL = this.rootService.apiRoute;
 
   // Default value for language
   public selectMedia: string;
@@ -52,7 +56,8 @@ export class ShowMediaComponent implements OnInit, DoCheck {
 
   constructor(
       private currentService: CurrentService,
-      private languageService: LanguageService
+      private languageService: LanguageService,
+      private rootService: RootService
   ) { }
 
   ngOnInit() {

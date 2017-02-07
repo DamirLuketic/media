@@ -27,7 +27,7 @@ export class AudioService {
   getAudioForChange(){
     return this.http.get(this.rootService.apiRoute + '/api/audio_for_change').
         map((response: Response) => response.json()).
-        catch(this.handleError);;
+        catch(this.handleError);
   }
 
   // Collect allowed audio

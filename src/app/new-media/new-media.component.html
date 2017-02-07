@@ -1,10 +1,13 @@
 <div class="container" id="basicContainer">
     <div class="row">
 
+        <button class="btn btn-primary" (click)="changeMediaType()">{{mediaType}}</button>
+        <br />
+
          <form [formGroup]="newMediaForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
             <fieldset>
 
-                <legend><button class="btn btn-primary" (click)="changeMediaType()">{{mediaType}}</button></legend>
+                <legend></legend>
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -70,7 +73,7 @@
                 <div class="col-md-12">
                     <div class="form-group" id="imageUpload">
                         <label for="uploadImage" class="btn uploadImageShow" id="uploadImageShow">
-                            SELECT IMAGES</label>
+                            {{selectImages}}</label>
                         <input type="file" class="uploadImage" id="uploadImage"
                                (change)="fileUpload($event)" accept=".jpg,.png" multiple="multiple">
                     </div>
