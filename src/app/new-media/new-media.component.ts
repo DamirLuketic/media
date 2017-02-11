@@ -1,15 +1,20 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormArray, FormControl} from "@angular/forms";
 import {LanguageService} from "../shared/services/language.service";
 import {MediaService} from "../shared/services/media.service";
 import {AuthService} from "../shared/services/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-new-media',
   templateUrl: 'new-media.component.html',
   styleUrls: ['new-media.component.css']
 })
-export class NewMediaComponent implements OnInit, DoCheck {
+export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
+
+  // Variables for subscriptions
+  private newMediaSubscription: Subscription = null;
+  private imagesForNewMediaSubsription: Subscription = null;
 
   // Variable for media type ("0" -> Audio, "1" -> Video)
   public mediaType: string = "Audio";
@@ -28,6 +33,35 @@ export class NewMediaComponent implements OnInit, DoCheck {
   public cat: string;
   public change: string;
   public create: string;
+  public otherIdentifiers: string;
+  public identifierNameTitle: string;
+  public identifierValueTitle: string;
+  public identifierAdd: string;
+
+  // Variable for identifiers form array
+  public identifiers: FormArray = new FormArray([]);
+
+  // Push identifier in form
+  onAddIdentifier(identifierName: string, identifierValue: string,
+                  inputName: HTMLInputElement, inputValue: HTMLInputElement) {
+    if(inputName.value.length != 0 && inputValue.value.length != 0){
+      (<FormArray>this.identifiers).push(
+          new FormGroup({
+            name: new FormControl({value: identifierName, disabled: true}, Validators.required),
+            identifierValue: new FormControl({value: identifierValue, disabled: true}, Validators.required)
+          })
+      );
+      inputName.value = null;
+      inputValue.value = null;
+    }else{
+      alert(this.fillAllIdentifierField);
+    }
+  }
+
+  // Remove identifier from form
+  onRemoveIdentifier(index: number) {
+    (<FormArray>this.newMediaForm.controls['identifiers']).removeAt(index);
+  }
 
   // Default values for form (data driven approach)
   public newMediaForm: FormGroup = this.formBuilder.group({
@@ -42,8 +76,10 @@ export class NewMediaComponent implements OnInit, DoCheck {
     'label': [],
     'barcodeNumber': [],
     'cat': [],
-    'change': [0]
+    'change': [0, Validators.required],
+    'identifiers': this.identifiers
   })
+
 
   // Default value for images files
   public imagesFiles = new FormData();
@@ -51,6 +87,7 @@ export class NewMediaComponent implements OnInit, DoCheck {
   // Variables for info and error
   public uploadError: string;
   public selectImages: string;
+  public fillAllIdentifierField: string;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -84,9 +121,14 @@ export class NewMediaComponent implements OnInit, DoCheck {
         this.cat = 'CAT';
         this.change = 'Für den Austausch';
         this.create = 'Erstellen';
+        this.otherIdentifiers = 'Anderer Bezeichner';
+        this.identifierNameTitle = 'Name';
+        this.identifierValueTitle = 'Wert';
+        this.identifierAdd = 'Hinzufügen';
         // Info and errors
           this.uploadError = 'Max. 3. Abbildungen';
           this.selectImages = 'Wählen Sie Bilder';
+          this.fillAllIdentifierField = 'Beide Felder erforderlich';
         break;
       case 'hr':
         this.category = 'Kategorija'
@@ -107,9 +149,14 @@ export class NewMediaComponent implements OnInit, DoCheck {
         this.cat = 'CAT';
         this.change = 'Za razmjenu';
         this.create = 'Unesi';
+        this.otherIdentifiers = 'Ostali identifikatori';
+        this.identifierNameTitle = 'Naziv';
+        this.identifierValueTitle = 'Vrijednost';
+        this.identifierAdd = 'Dodaj';
         // Info and errors
           this.uploadError = 'Max. 3. slike';
           this.selectImages = 'Odaberite slike';
+          this.fillAllIdentifierField = 'Oba polja su obavezna';
         break;
       default:
         this.category = 'Category'
@@ -130,9 +177,14 @@ export class NewMediaComponent implements OnInit, DoCheck {
         this.cat = 'CAT';
         this.change = 'For change';
         this.create = 'Create';
+        this.otherIdentifiers = 'Other identifiers';
+        this.identifierNameTitle = 'Name';
+        this.identifierValueTitle = 'Value';
+        this.identifierAdd = 'Add';
         // Info and errors
           this.uploadError = 'Max. 3. images';
           this.selectImages = 'Select images';
+          this.fillAllIdentifierField = 'Both fields required';
     }
   }
 
@@ -173,6 +225,8 @@ export class NewMediaComponent implements OnInit, DoCheck {
     let formValue = this.newMediaForm.value;
     formValue['type'] = this.mediaType;
     formValue['user_id'] = this.authService.auth.id;
+      // Identifiers form array is in new form group (for catching by ID), so we need special adding for them
+    formValue['identifiers']  = this.newMediaForm.controls['identifiers'].value;
 
     // Retrieve images files
     let imagesFiles = this.imagesFiles;
@@ -181,14 +235,28 @@ export class NewMediaComponent implements OnInit, DoCheck {
     let mediaId: number;
 
     // Send basic data, and retrieve media id
-    this.mediaService.newMedia(formValue).subscribe(
+    this.newMediaSubscription = this.mediaService.newMedia(formValue).subscribe(
         (data: number) => {
-            this.mediaService.newMediaImages(this.mediaType, data, imagesFiles).subscribe(
-                (data: any) => this.imagesFiles = null,
+            this.imagesForNewMediaSubsription = this.mediaService.newMediaImages(this.mediaType, data, imagesFiles).subscribe(
+                (data: any) => {
+                  this.identifiers = new FormArray([]),
+                  this.imagesFiles = new FormData(),
+                      this.newMediaForm.reset()
+                },
                 error => console.log(error)
             )
         },
         error => console.log(error)
     )
+  }
+
+  // Remove subscriptions
+  ngOnDestroy(){
+    if(this.newMediaSubscription != null){
+      this.newMediaSubscription.unsubscribe();
+    }
+    if(this.imagesForNewMediaSubsription != null){
+      this.imagesForNewMediaSubsription.unsubscribe();
+    }
   }
 }

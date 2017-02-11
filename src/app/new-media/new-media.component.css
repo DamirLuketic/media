@@ -10,3 +10,14 @@
 .uploadImageShow {
     background-color: #1CB94A;
 }
+
+/* Show error on form input */
+form .ng-invalid {
+    border: 1px solid red;
+}
+
+/* CSS for identifier title */
+#identifierTitle {
+    margin: 0.5rem 0 1.3rem 1.55rem;
+    font-weight: bold;
+}

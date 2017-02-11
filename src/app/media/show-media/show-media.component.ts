@@ -161,7 +161,7 @@ export class ShowMediaComponent implements OnInit, DoCheck {
         this.images = 'Images';
         this.label = 'Label';
         this.barcodeNumber = 'Barcode number';
-        this.othersIdentifiers = 'Others identifiers';
+        this.othersIdentifiers = 'Other identifiers';
         this.personalNote = 'Personal note';
           if(this.imagesHideShow){
             this.showHideImages = 'Show images';
@@ -169,9 +169,9 @@ export class ShowMediaComponent implements OnInit, DoCheck {
             this.showHideImages = 'Hide images';
           }
           if(this.identiriersHideShow){
-            this.showHideOthersIdentifiers = 'Show others identifiers';
+            this.showHideOthersIdentifiers = 'Show other identifiers';
           }else{
-            this.showHideOthersIdentifiers = 'Hide Others identifiers';
+            this.showHideOthersIdentifiers = 'Hide Other identifiers';
           }
         this.delete = 'Delete';
         this.update = 'Update';

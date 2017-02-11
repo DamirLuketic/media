@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <!-- Set image part -> Start -->
+                <!-- Set image -> Start -->
                 <div class="col-md-12">
                     <div class="form-group" id="imageUpload">
                         <label for="uploadImage" class="btn uploadImageShow" id="uploadImageShow">
@@ -78,7 +78,7 @@
                                (change)="fileUpload($event)" accept=".jpg,.png" multiple="multiple">
                     </div>
                 </div>
-                <!-- Set image part -> End -->
+                <!-- Set image -> End -->
 
                 <div class="col-md-6" *ngIf="mediaType == 'Audio'">
                     <div class="form-group">
@@ -109,10 +109,64 @@
                     </div>
                 </div>
 
+                <!-- Set identifiers -> Start -->
+                <h4 id="identifierTitle">{{otherIdentifiers}}</h4>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="identifierName">{{identifierNameTitle}}</label>
+                        <input type="text" id="identifierName" class="form-control" #identifierName>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="identifierValue">{{identifierValueTitle}}</label>
+                        <input type="text" id="identifierValue" class="form-control" #identifierValue>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="addIdentifier">{{identifierAdd}}</label>
+                        <button type="button" id="addIdentifier" class="btn btn-primary form-control"
+                                (click)="onAddIdentifier(identifierName.value, identifierValue.value,
+                                identifierName, identifierValue
+                                )">+</button>
+                    </div>
+                </div>
+                <br />
+                <!-- Set identifiers -> End -->
+
+                <!-- Show identifiers -> Start -->
+                    <ul class="list-group" formArrayName="identifiers">
+                        <div *ngFor="let identifier of newMediaForm.controls['identifiers'].controls; let i = index">
+                            <div formGroupName="{{i}}">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="name">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" formControlName="identifierValue">
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-group">
+                                      <button class="btn btn-danger" (click)="onRemoveIdentifier(i)">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                <!-- Show identifiers -> End -->
+
                 <div class="col-md-6 pull-right">
                     <div class="form-group">
                         <label for="create">{{create}}</label>
-                        <input type="submit" class="btn btn-primary form-control" id="create" value="{{create}}">
+                        <input type="submit" class="btn btn-primary form-control" id="create"
+                               value="{{create}}" [disabled]="!newMediaForm.valid">
                     </div>
                 </div>
 
