@@ -1,14 +1,17 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import { CurrentService } from "../../shared/services/current.service";
 import { LanguageService } from "../../shared/services/language.service";
 import { RootService } from "../../shared/services/root.service";
+import {error} from "util";
+import {MediaService} from "../../shared/services/media.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-show-media',
   templateUrl: './show-media.component.html',
   styleUrls: ['./show-media.component.css']
 })
-export class ShowMediaComponent implements OnInit, DoCheck {
+export class ShowMediaComponent implements OnInit, DoCheck, OnDestroy {
 
   // Variable for current media type (audio or video)
   public currentMediaType: string;
@@ -21,6 +24,10 @@ export class ShowMediaComponent implements OnInit, DoCheck {
 
   // Variable for basic root path (usage for show image)
   public basicURL = this.rootService.apiRoute;
+
+  // Variables for subscriptions
+  private deleteAudioSubscritpion: Subscription = null;
+  private deleteVideoSubscription: Subscription = null;
 
   // Default value for language
   public selectMedia: string;
@@ -57,7 +64,8 @@ export class ShowMediaComponent implements OnInit, DoCheck {
   constructor(
       private currentService: CurrentService,
       private languageService: LanguageService,
-      private rootService: RootService
+      private rootService: RootService,
+      private mediaService: MediaService
   ) { }
 
   ngOnInit() {
@@ -177,7 +185,6 @@ export class ShowMediaComponent implements OnInit, DoCheck {
         this.update = 'Update';
         this.createdAt = 'Created at:';
         this.updatedAt = 'Updated at:';
-        this
     }
 
     // Set current media type and current purpose
@@ -187,4 +194,39 @@ export class ShowMediaComponent implements OnInit, DoCheck {
     // Retrieve current media
     this.currentMedia = this.currentService.currentMedia;
   }
+
+  deleteMedia(){
+      let type: string = this.currentMediaType;
+      let id: number;
+
+      if(type == 'Audio'){
+        id = this.currentService.currentAudioId;
+        this.currentService.currentMedia = [];
+        this.currentService.currentAudioId = 0;
+        this.currentService.deletedAudioId.push(id);
+        this.deleteAudioSubscritpion = this.mediaService.deleteAudio(id).subscribe(
+            (data: any) => console.log(data),
+            error => console.log(error)
+        )
+      }else{
+        id = this.currentService.currentVideoId;
+        this.currentService.currentMedia = [];
+        this.currentService.currentVideoId = 0;
+        this.currentService.deletedVideosId.push(id);
+        this.deleteVideoSubscription = this.mediaService.deleteVideo(id).subscribe(
+            (data: any) => console.log(data),
+            error => console.log(error)
+        )
+      }
+  }
+
+  ngOnDestroy(){
+    if(this.deleteAudioSubscritpion != null){
+      this.deleteAudioSubscritpion.unsubscribe();
+    }
+    if(this.deleteVideoSubscription != null){
+      this.deleteVideoSubscription.unsubscribe();
+    }
+  }
+
 }

@@ -1,5 +1,5 @@
   <!-- Show for changeable and available media -> Template drive approach -> Start -->
-  <div class="row" id="audioChangeAllowedForm" *ngIf="currentPurpose != 'Personal'">
+  <div class="row" id="audioChangeAllowedForm" *ngIf="currentPurpose != 'Personal' && currentMedia.id">
 
     <form disabled="disabled">
       <fieldset>
@@ -152,7 +152,7 @@
   <!-- Show for changeable and available media -> Template drive approach -> End -->
 
   <!-- Show for personal media -> Data drive approach -> Start -->
-  <div class="row" id="audioPersonalForm" *ngIf="currentPurpose == 'Personal'">
+  <div class="row" id="audioPersonalForm" *ngIf="currentPurpose == 'Personal' && currentMedia.id">
 
     <form>
       <fieldset>
@@ -320,7 +320,7 @@
         <div class="col-md-6 pull-right">
           <div class="form-group">
             <label for="delete">{{delete}}</label>
-            <button class="btn btn-primary form-control" id="delete">{{delete}}</button>
+            <button class="btn btn-primary form-control" id="delete" (click)="deleteMedia()">{{delete}}</button>
           </div>
         </div>
 

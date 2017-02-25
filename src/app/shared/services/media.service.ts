@@ -32,4 +32,16 @@ export class MediaService {
         catch(this.handleError);
   }
 
+    deleteAudio(id: number){
+        return this.http.delete(this.rootService.apiRoute + '/api/audio/' + id).
+        map((response: Response) => response.json()).
+        catch(this.handleError);
+    }
+
+    deleteVideo(id: number){
+        return this.http.delete(this.rootService.apiRoute + '/api/video/' + id).
+        map((response: Response) => response.json()).
+        catch(this.handleError)
+    }
+
 }

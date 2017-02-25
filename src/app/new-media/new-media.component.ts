@@ -1,9 +1,10 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormArray, FormControl} from "@angular/forms";
-import {LanguageService} from "../shared/services/language.service";
-import {MediaService} from "../shared/services/media.service";
-import {AuthService} from "../shared/services/auth.service";
-import {Subscription} from "rxjs";
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from "@angular/forms";
+import { LanguageService } from "../shared/services/language.service";
+import { MediaService } from "../shared/services/media.service";
+import { AuthService } from "../shared/services/auth.service";
+import { Subscription } from "rxjs";
+import { NewMedia } from "../shared/class/new-media";
 
 @Component({
   selector: 'app-new-media',
@@ -227,6 +228,7 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
     formValue['user_id'] = this.authService.auth.id;
       // Identifiers form array is in new form group (for catching by ID), so we need special adding for them
     formValue['identifiers']  = this.newMediaForm.controls['identifiers'].value;
+    let sendData: NewMedia = formValue;
 
     // Retrieve images files
     let imagesFiles = this.imagesFiles;
@@ -235,13 +237,28 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
     let mediaId: number;
 
     // Send basic data, and retrieve media id
-    this.newMediaSubscription = this.mediaService.newMedia(formValue).subscribe(
+    this.newMediaSubscription = this.mediaService.newMedia(sendData).subscribe(
         (data: number) => {
             this.imagesForNewMediaSubsription = this.mediaService.newMediaImages(this.mediaType, data, imagesFiles).subscribe(
                 (data: any) => {
                   this.identifiers = new FormArray([]),
+                  this.newMediaForm.controls['identifiers'] = this.identifiers,
                   this.imagesFiles = new FormData(),
-                      this.newMediaForm.reset()
+                      this.newMediaForm = this.formBuilder.group({
+                        'category': [1, Validators.required],
+                        'condition': [1, Validators.required],
+                        'bandDirector': ['', Validators.required],
+                        'albumName': ['', Validators.required],
+                        'year': [],
+                        'firstReleaseYear': [],
+                        'description': [],
+                        'personalNote': [],
+                        'label': [],
+                        'barcodeNumber': [],
+                        'cat': [],
+                        'change': [0, Validators.required],
+                        'identifiers': this.identifiers
+                  })
                 },
                 error => console.log(error)
             )

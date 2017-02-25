@@ -4,7 +4,7 @@
 <!-- Show list for audio -> Start -->
 
 <ul class="list-group" *ngIf="currentViewMedia == 'Audio'">
-    <li class="list-group-item" *ngFor="let audio of audioPersonal" (click)="setCurrentMedia(audio)"
+    <li class="list-group-item" *ngFor="let audio of audioPersonalView" (click)="setCurrentMedia(audio)"
         [ngClass]="{currentView: currentAudioId == audio.id}">
         {{audio.band + ' - ' + audio.album}}<span *ngIf="audio.year">{{' (' + audio?.year + ')'}}</span></li>
 </ul>
@@ -14,7 +14,7 @@
 <!-- Show list for video -> Start -->
 
 <ul class="list-group" *ngIf="currentViewMedia == 'Video'">
-    <li class="list-group-item" *ngFor="let video of videoPersonal" (click)="setCurrentMedia(video)"
+    <li class="list-group-item" *ngFor="let video of videoPersonalView" (click)="setCurrentMedia(video)"
         [ngClass]="{currentView: currentVideoId == video.id}">
         {{video.name}}<span *ngIf="video.year">{{' (' + video?.year + ')'}}</span></li>
 </ul>

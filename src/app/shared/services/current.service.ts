@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import {AudioForChange} from "../class/audio-for-change";
-import {VideoForChange} from "../class/video-for-change";
 
 @Injectable()
 export class CurrentService {
@@ -15,8 +13,12 @@ export class CurrentService {
   public currentMedia = [];
 
   // Current media id
-  public currentAudioId: number;
-  public currentVideoId: number;
+  public currentAudioId: number = 0;
+  public currentVideoId: number = 0;
+
+  // Deleted media id
+  public deletedAudioId = [];
+  public deletedVideosId = [];
 
   constructor() { }
 
