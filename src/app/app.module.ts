@@ -15,7 +15,6 @@ import { ChangeListComponent } from "./media/change-list/change-list.component";
 import { PersonalListComponent } from "./media/personal-list/personal-list.component";
 import { AllowedListComponent } from "./media/allowed-list/allowed-list.component";
 import { NewMediaComponent } from "./new-media/new-media.component";
-import { UpdateMediaComponent } from "./media/update-media/update-media.component";
 import { UsersListComponent } from "./users/users-list/users-list.component";
 import { UserViewComponent } from "./users/user-view/user-view.component";
 import { LanguageService } from "./shared/services/language.service";
@@ -29,6 +28,8 @@ import { VideoService } from "./shared/services/video.service";
 import { CurrentService } from "./shared/services/current.service";
 import { ShowMediaComponent } from "./media/show-media/show-media.component";
 import { MediaService } from "./shared/services/media.service";
+import { CanLeaveGuard } from "./shared/guardiens/canLeave.guard";
+import { AuthAccessGuard } from "./shared/guardiens/authAccess.guard";
 
 
 @NgModule({
@@ -46,7 +47,6 @@ import { MediaService } from "./shared/services/media.service";
         ChangeListComponent,
         PersonalListComponent,
         AllowedListComponent,
-        UpdateMediaComponent,
       // "users" children
         UsersListComponent,
         UserViewComponent,
@@ -61,7 +61,7 @@ import { MediaService } from "./shared/services/media.service";
       routes
   ],
   providers: [LanguageService, AuthService, RootService, CookieService, ContactService, AudioService, VideoService,
-    CurrentService, MediaService],
+    CurrentService, MediaService, CanLeaveGuard, AuthAccessGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

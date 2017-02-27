@@ -5,19 +5,20 @@ import { MediaService } from "../shared/services/media.service";
 import { AuthService } from "../shared/services/auth.service";
 import { Subscription } from "rxjs";
 import { NewMedia } from "../shared/class/new-media";
+import { CanLeave } from "../shared/guardiens/canLeave.guard";
 
 @Component({
   selector: 'app-new-media',
   templateUrl: 'new-media.component.html',
   styleUrls: ['new-media.component.css']
 })
-export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
+export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
 
   // Variables for subscriptions
   private newMediaSubscription: Subscription = null;
   private imagesForNewMediaSubsription: Subscription = null;
 
-  // Variable for media type ("0" -> Audio, "1" -> Video)
+  // Variable for media type
   public mediaType: string = "Audio";
 
   // Variables for new media form titles
@@ -89,6 +90,7 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
   public uploadError: string;
   public selectImages: string;
   public fillAllIdentifierField: string;
+  public canLeaveError: string;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -130,6 +132,7 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
           this.uploadError = 'Max. 3. Abbildungen';
           this.selectImages = 'Wählen Sie Bilder';
           this.fillAllIdentifierField = 'Beide Felder erforderlich';
+          this.canLeaveError = 'Änderungen werden nicht gespeichert, willst du gehen?';
         break;
       case 'hr':
         this.category = 'Kategorija'
@@ -158,6 +161,7 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
           this.uploadError = 'Max. 3. slike';
           this.selectImages = 'Odaberite slike';
           this.fillAllIdentifierField = 'Oba polja su obavezna';
+          this.canLeaveError = 'Promjene nisu spremljene, želite li otići?';
         break;
       default:
         this.category = 'Category'
@@ -186,6 +190,7 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
           this.uploadError = 'Max. 3. images';
           this.selectImages = 'Select images';
           this.fillAllIdentifierField = 'Both fields required';
+          this.canLeaveError = 'Changes are not saved, do you want to leave?';
     }
   }
 
@@ -265,6 +270,15 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy {
         },
         error => console.log(error)
     )
+  }
+
+  // Implements of self-write "CanLeave" interfaces
+  canLeave(){
+    if(this.newMediaForm.dirty){
+      return confirm(this.canLeaveError);
+    }else {
+      return true;
+    }
   }
 
   // Remove subscriptions

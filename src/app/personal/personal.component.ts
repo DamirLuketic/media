@@ -3,15 +3,16 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { LanguageService } from "../shared/services/language.service";
 import { AuthService } from "../shared/services/auth.service";
 import { UpdateAuth } from "../shared/class/update-auth";
-import {Subscription} from "rxjs";
-import {RootService} from "../shared/services/root.service";
+import { Subscription } from "rxjs";
+import { RootService } from "../shared/services/root.service";
+import { CanLeave } from "../shared/guardiens/canLeave.guard";
 
 @Component({
   selector: 'app-personal',
   templateUrl: './personal.component.html',
   styleUrls: ['./personal.component.css']
 })
-export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
+export class PersonalComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
 
   // Subscription
   private updateSubscription: Subscription = null;
@@ -48,6 +49,9 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
     });
   }
 
+  // Variables for error
+  public canLeaveError: string;
+
   ngOnInit() {
     if(this.authService.auth != null){
       this.name = this.authService.auth.name;
@@ -65,6 +69,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.update = 'Aktualisieren';
         this.newPasswordPlaceholder = 'Optional (mindestens 6 Zeichen)';
         this.uploadNewImage = 'Neues Bild hochladen';
+          this.canLeaveError = 'Änderungen werden nicht gespeichert, willst du gehen?';
         break;
       case 'en':
         this.personal = 'Personal';
@@ -74,6 +79,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.update = 'Update';
         this.newPasswordPlaceholder = 'Optional (min. 6. characters)';
         this.uploadNewImage = 'Upload new image';
+          this.canLeaveError = 'Changes are not saved, do you want to leave?';
         break;
       case 'hr':
         this.personal = 'Osobno';
@@ -83,6 +89,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.update = 'Ažuriraj';
         this.newPasswordPlaceholder = 'Opcija (min. 6. znakova)';
         this.uploadNewImage = 'Učitaj novu sliku';
+          this.canLeaveError = 'Promjene nisu spremljene, želite li otići?';
         break;
       default:
         this.personal = 'Personal';
@@ -92,6 +99,7 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
         this.update = 'Update';
         this.newPasswordPlaceholder = 'Optional (min. 6. characters)';
         this.uploadNewImage = 'Upload new image';
+          this.canLeaveError = 'Changes are not saved, do you want to leave?';
     }
   }
 
@@ -181,6 +189,15 @@ export class PersonalComponent implements OnInit, DoCheck, OnDestroy {
           },
           error => console.log(error)
       );
+    }
+  }
+
+  // Implements of self-write "CanLeave" interfaces
+  canLeave(){
+    if(this.personalForm.dirty){
+      return confirm(this.canLeaveError);
+    }else {
+      return true;
     }
   }
 
