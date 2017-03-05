@@ -7,6 +7,8 @@ import {LanguageService} from "../../shared/services/language.service";
 import {AudioService} from "../../shared/services/audio.service";
 import {VideoService} from "../../shared/services/video.service";
 import {AuthService} from "../../shared/services/auth.service";
+import {Identifiers} from "@angular/compiler/src/identifiers";
+import {Identifier} from "../../shared/class/identifier";
 
 @Component({
   selector: 'app-personal-list',
@@ -14,10 +16,6 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./personal-list.component.css']
 })
 export class PersonalListComponent implements OnInit {
-
-  // Collected data from media
-  public audioPersonal: AudioPersonal[] = [];
-  public videoPersonal: VideoPersonal[] = [];
 
   // Collected media for show (without deleted media)
   public audioPersonalView: AudioPersonal[] = [];
@@ -54,7 +52,7 @@ export class PersonalListComponent implements OnInit {
     // Collect data for all media group -> On each init collect data to update current list
     this.audioSubscription = this.audioService.collectAudioPersonal(this.authService.auth.id).subscribe(
         (data: AudioPersonal[]) => {
-          this.audioPersonal = data,
+          this.currentService.currentAudioPersonal = data,
               console.log(data)
         },
         error => console.log(error)
@@ -62,7 +60,7 @@ export class PersonalListComponent implements OnInit {
 
     this.videoSubscription = this.videoService.collectVideoPersonal(this.authService.auth.id).subscribe(
         (data: VideoPersonal[]) => {
-          this.videoPersonal = data,
+          this.currentService.currentVideoPersonal = data,
               console.log(data)
         },
         error => console.log(error)
@@ -116,18 +114,18 @@ export class PersonalListComponent implements OnInit {
     this.deletedVideosId = this.currentService.deletedVideosId;
 
     // Set audio and video for view -> if not in deleted arrays
-    if(this.audioPersonal != []){
+    if(this.currentService.currentAudioPersonal != []){
       this.audioPersonalView = [];
-      for(let audio of this.audioPersonal){
+      for(let audio of this.currentService.currentAudioPersonal){
         if(this.isInDeletedAudioArray(audio.id) == false){
           this.audioPersonalView.push(audio);
         }
       }
     }
 
-    if(this.videoPersonal != []){
+    if(this.currentService.currentVideoPersonal != []){
       this.videoPersonalView = [];
-      for(let video of this.videoPersonal){
+      for(let video of this.currentService.currentVideoPersonal){
         if(this.isInDeletedVideoArray(video.id) == false){
           this.videoPersonalView.push(video);
         }
@@ -138,6 +136,11 @@ export class PersonalListComponent implements OnInit {
 
   // Set current media id and current media
   setCurrentMedia(media){
+      // Current new featured image id (for media->showMedia->update->newFeaturedImageId)
+    this.currentService.newFeaturedImageId = 0;
+
+      // "currentMediaUpdateDate" -> usage in media->personal->update
+    this.currentService.currentMediaUpdateDate = null;
     if(this.currentViewMedia == 'Audio'){
       this.currentService.currentAudioId = media.id;
     }else if(this.currentViewMedia == 'Video'){
@@ -145,6 +148,7 @@ export class PersonalListComponent implements OnInit {
     };
 
     this.currentService.currentMedia = media;
+    this.currentService.currentIdentifiers = media.identifiers;
   }
 
   ngOnDestroy() {

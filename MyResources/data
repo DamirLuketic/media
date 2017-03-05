@@ -28,3 +28,8 @@ recycle user-> registerLogin -> from couple of app
 // Media - part
 -> router outlet is set for list (col-4)
 -> "show-media" component is set for showing media details (col-8)
+
+
+
+// New Media -> Good example of usage data driven forms
+// Personal -> Update media (through "Show media") -> Good example of usage template drive forms

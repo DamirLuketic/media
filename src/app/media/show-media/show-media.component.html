@@ -154,24 +154,28 @@
   <!-- Show for personal media -> Data drive approach -> Start -->
   <div class="row" id="audioPersonalForm" *ngIf="currentPurpose == 'Personal' && currentMedia.id">
 
-    <form>
+    <form (ngSubmit)="updateMedia(f)" #f="ngForm">
       <fieldset>
         <legend>{{currentMedia?.album}}{{currentMedia?.name}}
           <span *ngIf="!currentMedia.album && !currentMedia.name">{{selectMedia}}</span>
         </legend>
 
+        <input type="hidden" [ngModel]="currentMediaType" name="media_category">
+        <input type="hidden" [ngModel]="currentMedia?.id" name="id">
+
         <div class="col-md-6">
           <div class="form-group">
             <label for="categoryPersonal">{{mediaCategory}}</label>
             <input type="text" class="form-control" id="categoryPersonal"
-                   value="{{currentMedia?.audio_category_id}}{{currentMedia?.video_category_id}}">
+                   [ngModel]="currentMedia?.audio_category_id || currentMedia?.video_category_id" name="category_id">
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label for="conditionPersonal">{{condition}}</label>
-            <input type="text" class="form-control" id="conditionPersonal" value="{{currentMedia?.condition_id}}">
+            <input type="text" class="form-control" id="conditionPersonal"
+                   [ngModel]="currentMedia?.condition_id" name="condition_id">
           </div>
         </div>
 
@@ -180,7 +184,7 @@
             <label for="bandDirectorPersonal" *ngIf="currentMediaType == 'Audio'">{{band}}</label>
             <label for="bandDirectorPersonal" *ngIf="currentMediaType == 'Video'">{{director}}</label>
             <input type="text" class="form-control" id="bandDirectorPersonal"
-                   value="{{currentMedia?.band}}{{currentMedia?.director}}">
+                   [ngModel]="currentMedia?.band || currentMedia?.director" name="bandDirector">
           </div>
         </div>
 
@@ -189,14 +193,15 @@
             <label for="albumNamePersonal" *ngIf="currentMediaType == 'Audio'">{{album}}</label>
             <label for="albumNamePersonal" *ngIf="currentMediaType == 'Video'">{{name}}</label>
             <input type="text" class="form-control" id="albumNamePersonal"
-                   value="{{currentMedia?.album}}{{currentMedia?.name}}">
+                   [ngModel]="currentMedia?.album || currentMedia?.name" name="albumName">
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label for="yearPersonal">{{year}}</label>
-            <input type="number" class="form-control" id="yearPersonal" value="{{currentMedia?.year}}">
+            <input type="number" class="form-control" id="yearPersonal"
+                   [ngModel]="currentMedia?.year" name="year">
           </div>
         </div>
 
@@ -204,7 +209,7 @@
           <div class="form-group">
             <label for="first_release_yearPersonal">{{originalReleaseYear}}</label>
             <input type="number" class="form-control" id="first_release_yearPersonal"
-                   value="{{currentMedia?.first_release_year}}">
+                   [ngModel]="currentMedia?.first_release_year" name="first_release_year">
           </div>
         </div>
 
@@ -212,7 +217,8 @@
           <div class="form-group">
             <label for="descriptionPersonal">{{description}}</label>
             <br />
-            <textarea rows="6" style="width: 100%" id="descriptionPersonal">{{currentMedia?.description}}</textarea>
+            <textarea rows="6" style="width: 100%" id="descriptionPersonal"
+                      [ngModel]="currentMedia?.description" name="description"></textarea>
           </div>
         </div>
 
@@ -220,14 +226,16 @@
           <div class="form-group">
             <label for="personalNote">{{personalNote}}</label>
             <br />
-            <textarea rows="4" style="width: 100%" id="personalNote">{{currentMedia?.personal_note}}</textarea>
+            <textarea rows="4" style="width: 100%" id="personalNote"
+                      [ngModel]="currentMedia?.personal_note" name="personal_note"></textarea>
           </div>
         </div>
 
         <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
           <div class="form-group">
             <label for="labelPersonal">{{label}}</label>
-            <input type="text" class="form-control" id="labelPersonal" value="{{currentMedia?.label}}">
+            <input type="text" class="form-control" id="labelPersonal"
+                   value="currentMedia?.label" name="label">
           </div>
         </div>
 
@@ -235,21 +243,23 @@
           <div class="form-group">
             <label for="barcode_numbersPersonal">{{barcodeNumber}}</label>
             <input type="text" class="form-control" id="barcode_numbersPersonal"
-                   value="{{currentMedia?.barcode_numbers}}">
+                   [ngModel]="currentMedia?.barcode_numbers" name="barcode_numbers">
           </div>
         </div>
 
         <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
           <div class="form-group">
             <label for="catPersonal">CAT</label>
-            <input type="text" class="form-control" id="catPersonal" value="{{currentMedia?.cat}}">
+            <input type="text" class="form-control" id="catPersonal"
+                   [ngModel]="currentMedia?.cat" name="cat">
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
             <label for="for_changePersonal">{{changeStatus}}</label>
-            <input type="text" class="form-control" id="for_changePersonal" value="{{currentMedia?.for_change}}">
+            <input type="text" class="form-control" id="for_changePersonal"
+                   [ngModel]="currentMedia?.for_change" name="for_change">
           </div>
         </div>
 
@@ -261,37 +271,102 @@
         </div>
         <!-- Hide / Show buttons -> End ->
 
-        <!-- Images - Start -->
+         <!--Images - Start -->
         <div class="col-md-12" [ngClass]="{hideThis: imagesHideShow}">
           <hr />
           <h4>{{images}}</h4>
           <div class="row">
-            <div *ngFor="let image of currentMedia.images" class="col-sm-offset-1">
-              <img *ngIf="image.featured == 1" src="{{basicURL}}{{image.url}}" alt="featured image" class="col-sm-4">
-              <img *ngIf="image.featured != 1" src="{{basicURL}}{{image.url}}" alt="not featured image" class="col-sm-3">
+            <div *ngFor="let image of currentMedia.images" class="col-xs-offset-1">
+
+              <img *ngIf="image.featured == 1 && !isInDeletedImageArray(image.id)" src="{{basicURL}}{{image.url}}"
+                   alt="featured image" class="col-xs-2">
+              <div class="col-xs-1">
+              <button *ngIf="image.featured == 1 && !isInDeletedImageArray(image.id)" class="btn btn-danger"
+                        (click)="deleteImage(currentMedia.id,image.id)">X</button>
+              <button *ngIf="image.featured == 1 && newFeaturedImageId != 0 && !isInDeletedImageArray(image.id)
+                                && newFeaturedImageId != image.id"
+                      class="btn btn-primary" (click)="setNewFeaturedImage(currentMedia.id, image.id)">F</button>
+              </div>
+
+              <img *ngIf="image.featured != 1 && !isInDeletedImageArray(image.id)" src="{{basicURL}}{{image.url}}"
+                   alt="not featured image" class="col-xs-2">
+              <div class="col-xs-1">
+                <button *ngIf="image.featured != 1 && !isInDeletedImageArray(image.id)" class="btn btn-danger"
+                        (click)="deleteImage(currentMedia.id, image.id)">X</button>
+                <button *ngIf="image.featured != 1 && !isInDeletedImageArray(image.id)
+                                && newFeaturedImageId != image.id"
+                        class="btn btn-primary" (click)="setNewFeaturedImage(currentMedia.id, image.id)">F</button>
+              </div>
+
             </div>
           </div>
+          <br />
+            <div class="pull-right" *ngIf="currentMedia.images.length != 0" style="size: 3rem"
+                 [ngClass]="{hideInfo: hideImageUpdateInfo}">
+              <button class="btn btn-primary" disabled="disabled">F</button>
+              <p>MAKE FEATURED</p>
+            </div>
+          <br /><br />
           <hr />
         </div>
         <!-- Images - End -->
 
         <!-- Identifiers - Start -->
-        <div class="col-md-12"  [ngClass]="{hideThis: identiriersHideShow}">
+        <div class="col-md-12" [ngClass]="{hideThis: identiriersHideShow}">
           <hr />
           <h4>{{othersIdentifiers}}</h4>
+
+          <!-- Set identifiers -> Start -->
+
           <div class="row">
-            <div *ngFor="let identifier of currentMedia.identifiers">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label for="identifierName">{{identifierNameTitle}}</label>
+              <input type="text" id="identifierName" class="form-control" #identifierName>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="identifierValue">{{identifierValueTitle}}</label>
+              <input type="text" id="identifierValue" class="form-control" #identifierValue>
+            </div>
+          </div>
+
+          <div class="col-md-1">
+            <div class="form-group">
+              <label for="addIdentifier">{{identifierAdd}}</label>
+              <button type="button" id="addIdentifier" class="btn btn-primary form-control"
+                      (click)="onAddIdentifier(identifierName, identifierValue)">+</button>
+            </div>
+          </div>
+
+          <!-- Set identifiers -> End -->
+
+          <!-- Show & remove identifiers -> Start -->
+            <hr />
+            <div *ngFor="let identifier of currentIdentifiers; let i = index">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <input type="text" class="form-control" value="{{identifier?.title}}">
+                </div>
+              </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="identifiersPersonal">{{identifier?.title}}</label>
-                  <input type="text" id="identifiersPersonal"
-                         class="form-control" value="{{identifier?.input}}">
+                  <input type="text" class="form-control" value="{{identifier?.input}}">
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group">
+                  <button class="btn btn-danger" value="X" (click)="onRemoveIdentifier(i)">X</button>
                 </div>
               </div>
             </div>
           </div>
           <hr />
         </div>
+          <!-- Show & remove identifiers -> End -->
+
         <!-- Identifiers - End -->
 
         <div class="col-md-6">
@@ -302,7 +377,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="currentMediaUpdateDate == null">
           <div class="form-group">
             <label for="updated_at">{{updatedAt}}</label>
             <input type="date" class="form-control" id="updated_at"
@@ -310,10 +385,18 @@
           </div>
         </div>
 
+        <div class="col-md-6" *ngIf="currentMediaUpdateDate != null">
+          <div class="form-group">
+            <label for="updated_at_new">{{updatedAt}}</label>
+            <input type="date" class="form-control" id="updated_at_new"
+                   value="{{currentMediaUpdateDate.slice(0,10)}}" disabled="disabled">
+          </div>
+        </div>
+
         <div class="col-md-6 pull-right">
           <div class="form-group">
             <label for="update">{{update}}</label>
-            <button class="btn btn-primary form-control" id="update">{{update}}</button>
+            <button type="submit" class="btn btn-primary form-control" id="update">{{update}}</button>
           </div>
         </div>
 
