@@ -6,6 +6,8 @@ import { AuthService } from "../shared/services/auth.service";
 import { Subscription } from "rxjs";
 import { NewMedia } from "../shared/class/new-media";
 import { CanLeave } from "../shared/guardiens/canLeave.guard";
+import {MediaCategory} from "../shared/class/media-category";
+import {Condition} from "../shared/class/condition";
 
 @Component({
   selector: 'app-new-media',
@@ -21,6 +23,11 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
   // Variable for media type
   public mediaType: string = "Audio";
 
+  // Variables for media categories & conditions
+  public audioCategories: MediaCategory[];
+  public videoCategories: MediaCategory[];
+  public conditions: Condition[];
+
   // Variables for new media form titles
   public category: string;
   public condition: string;
@@ -34,6 +41,8 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
   public barcodeNumber: string;
   public cat: string;
   public change: string;
+    public changeAllowed: string;
+    public changeNotAllowed: string;
   public create: string;
   public otherIdentifiers: string;
   public identifierNameTitle: string;
@@ -103,6 +112,11 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
   }
 
   ngDoCheck(){
+    // Set values for categories and conditions
+    this.audioCategories = this.mediaService.audioCategories;
+    this.videoCategories = this.mediaService.videoCategories;
+    this.conditions = this.mediaService.conditions;
+
     // Values for form label, info and errors
     switch (this.languageService.getLanguage()){
       case 'de':
@@ -123,6 +137,8 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
         this.barcodeNumber = 'Barcode nummer';
         this.cat = 'CAT';
         this.change = 'Für den Austausch';
+          this.changeAllowed = 'Zum Tausch';
+          this.changeNotAllowed = 'Nicht zum austausch';
         this.create = 'Erstellen';
         this.otherIdentifiers = 'Anderer Bezeichner';
         this.identifierNameTitle = 'Name';
@@ -152,6 +168,8 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
         this.barcodeNumber = 'Bar kod broj';
         this.cat = 'CAT';
         this.change = 'Za razmjenu';
+          this.changeAllowed = 'Za razmjenu';
+          this.changeNotAllowed = 'Nije za razmjenu';
         this.create = 'Unesi';
         this.otherIdentifiers = 'Ostali identifikatori';
         this.identifierNameTitle = 'Naziv';
@@ -180,7 +198,9 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
         this.label = 'Label';
         this.barcodeNumber = 'Barcode number';
         this.cat = 'CAT';
-        this.change = 'For change';
+        this.change = 'For exchange';
+          this.changeAllowed = 'For exchange';
+          this.changeNotAllowed = 'Not for exchange';
         this.create = 'Create';
         this.otherIdentifiers = 'Other identifiers';
         this.identifierNameTitle = 'Name';
@@ -244,7 +264,8 @@ export class NewMediaComponent implements OnInit, DoCheck, OnDestroy, CanLeave {
     // Send basic data, and retrieve media id
     this.newMediaSubscription = this.mediaService.newMedia(sendData).subscribe(
         (data: number) => {
-            this.imagesForNewMediaSubsription = this.mediaService.newMediaImages(this.mediaType, data, imagesFiles).subscribe(
+            this.imagesForNewMediaSubsription = this.mediaService.newMediaImages(this.mediaType, data, imagesFiles).
+            subscribe(
                 (data: any) => {
                   this.identifiers = new FormArray([]),
                   this.newMediaForm.controls['identifiers'] = this.identifiers,

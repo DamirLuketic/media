@@ -33,3 +33,6 @@ recycle user-> registerLogin -> from couple of app
 
 // New Media -> Good example of usage data driven forms
 // Personal -> Update media (through "Show media") -> Good example of usage template drive forms
+
+// In -> Show-media -> collected deleted images id is leftover, left for furthure usage
+    -> set to show-media.component.ts, show-media.component.html and current service

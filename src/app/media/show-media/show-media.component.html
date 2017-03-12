@@ -7,18 +7,20 @@
           <span *ngIf="!currentMedia.album && !currentMedia.name">{{selectMedia}}</span>
         </legend>
 
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="categoryName != undefined">
           <div class="form-group">
             <label for="category">{{mediaCategory}}</label>
             <input type="text" class="form-control" id="category"
-                   value="{{currentMedia?.audio_category_id}}{{currentMedia?.video_category_id}}">
+                   value="{{categoryName}}">
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="conditionName != undefined">
           <div class="form-group">
-            <label for="condition">{{condition}}</label>
-            <input type="text" class="form-control" id="condition" value="{{currentMedia?.condition_id}}">
+            <label for="condition">{{condition}}
+              <a target="_blank" href="http://www.goldminemag.com/collector-resources/record-grading-101">
+                (global)</a></label>
+            <input type="text" class="form-control" id="condition" value="{{conditionName}}">
           </div>
         </div>
 
@@ -135,7 +137,10 @@
         <div class="col-md-6" *ngIf="currentPurpose == 'Allowed'">
           <div class="form-group">
             <label for="for_change">{{changeStatus}}</label>
-            <input type="text" class="form-control" id="for_change" value="{{currentMedia?.for_change}}">
+            <input type="text" *ngIf="currentMedia?.for_change == 0" class="form-control"
+                   id="for_change" value="{{changeNotAllowed}}">
+            <input type="text" *ngIf="currentMedia?.for_change == 1" class="form-control"
+                   id="for_change" value="{{changeAllowed}}">
           </div>
         </div>
 
@@ -285,26 +290,36 @@
                         (click)="deleteImage(currentMedia.id,image.id)">X</button>
               <button *ngIf="image.featured == 1 && newFeaturedImageId != 0 && !isInDeletedImageArray(image.id)
                                 && newFeaturedImageId != image.id"
-                      class="btn btn-primary" (click)="setNewFeaturedImage(currentMedia.id, image.id)">F</button>
+                      class="btn btn-primary" (click)="setNewFeaturedImage(currentMedia.id, image.id)">F *</button>
               </div>
 
               <img *ngIf="image.featured != 1 && !isInDeletedImageArray(image.id)" src="{{basicURL}}{{image.url}}"
-                   alt="not featured image" class="col-xs-2">
+                   alt="not featured image" class="col-xs-2 styleForNotFeatured">
               <div class="col-xs-1">
                 <button *ngIf="image.featured != 1 && !isInDeletedImageArray(image.id)" class="btn btn-danger"
                         (click)="deleteImage(currentMedia.id, image.id)">X</button>
                 <button *ngIf="image.featured != 1 && !isInDeletedImageArray(image.id)
                                 && newFeaturedImageId != image.id"
-                        class="btn btn-primary" (click)="setNewFeaturedImage(currentMedia.id, image.id)">F</button>
+                        class="btn btn-primary" (click)="setNewFeaturedImage(currentMedia.id, image.id)">F *</button>
               </div>
 
             </div>
+
+            <!-- Set new image -> Start -->
+            <div class="col-xs-3" *ngIf="currentMedia.images.length < 3">
+              <div class="form-group" id="imageUpload">
+                <label for="uploadImage" class="btn uploadImageShow" id="uploadImageShow">{{addPhoto}} **</label>
+                <input type="file" class="uploadImage" id="uploadImage"
+                       (change)="fileUpload($event, currentMedia)" accept=".jpg,.png">
+              </div>
+            </div>
+            <!-- Set new image -> End -->
+
           </div>
           <br />
-            <div class="pull-right" *ngIf="currentMedia.images.length != 0" style="size: 3rem"
-                 [ngClass]="{hideInfo: hideImageUpdateInfo}">
-              <button class="btn btn-primary" disabled="disabled">F</button>
-              <p>MAKE FEATURED</p>
+            <div class="pull-right" *ngIf="currentMedia.images.length != 0" style="font-size: 1.2rem">
+              <p>* {{makeFeatured}}</p>
+              <p *ngIf="currentMedia.images.length < 3">** {{addPhotoInfo}}</p>
             </div>
           <br /><br />
           <hr />

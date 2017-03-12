@@ -6,9 +6,16 @@ import 'rxjs/Rx';
 import { UpdateMedia } from "../class/update-media";
 import {DeleteImageData} from "../class/delete-image-data";
 import {SetNewFeaturedImageData} from "../class/set-new-featured-image-data";
+import {MediaCategory} from "../class/media-category";
+import {Condition} from "../class/condition";
 
 @Injectable()
 export class MediaService {
+
+    public audioCategories: MediaCategory[] = null;
+    public videoCategories: MediaCategory[] = null;
+
+    public conditions: Condition[] = null;
 
   constructor(
       private http: Http,
@@ -17,6 +24,18 @@ export class MediaService {
 
   private handleError(error: any){
     return Observable.throw(error.json());
+  }
+
+  collectMediaCategories(){
+      return this.http.get(this.rootService.apiRoute + '/api/collect_media_categories').
+          map((response: Response) => response.json()).
+          catch(this.handleError);
+  }
+
+  collectConditions(){
+      return this.http.get(this.rootService.apiRoute + '/api/collect_conditions').
+          map((response: Response) => response.json()).
+          catch(this.handleError);
   }
 
   newMediaImages(media_type: string, media_id: number, newMediaImages){
@@ -75,5 +94,4 @@ export class MediaService {
           map((response: Response) => response.json()).
           catch(this.handleError);
     }
-
 }

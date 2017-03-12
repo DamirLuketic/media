@@ -32,7 +32,7 @@ export class MediaComponent implements OnInit, DoCheck, OnDestroy {
           this.newMedia = 'Neue Medien';
           break;
         case 'en':
-          this.forChange = 'For change';
+          this.forChange = 'For exchange';
           this.allowedList = 'Allowed list';
           this.personalList = 'Personal list';
           this.newMedia = 'New media';
@@ -44,7 +44,7 @@ export class MediaComponent implements OnInit, DoCheck, OnDestroy {
           this.newMedia = 'Novi medij';
           break;
         default:
-          this.forChange = 'For change';
+          this.forChange = 'For exchange';
           this.allowedList = 'Allowed list';
           this.personalList = 'Personal list';
           this.newMedia = 'New media';

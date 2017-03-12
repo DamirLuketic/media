@@ -3,6 +3,10 @@
     pointer-events: none;
 }
 
+a {
+    pointer-events: auto;
+}
+
 /* Enable input for send offer */
 #offer {
     pointer-events: auto;
@@ -20,7 +24,15 @@
     margin: 0 0 1.75rem 2.2rem;
 }
 
-
-.hideInfo {
+/* Css for upload form */
+.uploadImage {
     visibility: hidden;
+}
+
+.uploadImageShow {
+    background-color: #1CB94A;
+}
+
+.styleForNotFeatured {
+    opacity: 0.4;
 }

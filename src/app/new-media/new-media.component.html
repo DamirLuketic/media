@@ -9,17 +9,35 @@
 
                 <legend></legend>
 
-                <div class="col-md-6">
+                <!-- Media categories -> Start -->
+                <div class="col-md-6" *ngIf="mediaType == 'Audio'">
                     <div class="form-group">
                         <label for="category">{{category}}</label>
-                        <input type="text" class="form-control" id="category" formControlName="category">
+                        <select name="category" id="category" class="form-control" formControlName="category">
+                            <option *ngFor="let c of audioCategories;" value="{{c.id}}">{{c.name}}</option>
+                        </select>
                     </div>
                 </div>
 
+                <div class="col-md-6" *ngIf="mediaType == 'Video'">
+                    <div class="form-group">
+                        <label for="category">{{category}}</label>
+                        <select name="category" id="category" class="form-control" formControlName="category">
+                            <option *ngFor="let c of videoCategories;" value="{{c.id}}">{{c.name}}</option>
+                        </select>
+
+                    </div>
+                </div>
+                <!-- Media categories -> End -->
+
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="condition">{{condition}}</label>
-                        <input type="text" class="form-control" id="condition" formControlName="condition">
+                        <label for="condition">{{condition}}
+                            <a target="_blank" href="http://www.goldminemag.com/collector-resources/record-grading-101">
+                                (global)</a></label>
+                        <select name="condition" id="condition" class="form-control" formControlName="condition">
+                            <option *ngFor="let co of conditions" value="{{co.id}}">{{co.name}}</option>
+                        </select>
                     </div>
                 </div>
 
@@ -105,7 +123,10 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="change">{{change}}</label>
-                        <input type="text" class="form-control" id="change" formControlName="change">
+                            <select name="change" id="change" class="form-control" formControlName="change">
+                                <option value="0">{{changeNotAllowed}}</option>
+                                <option value="1">{{changeAllowed}}</option>
+                            </select>
                     </div>
                 </div>
 
