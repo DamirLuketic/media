@@ -76,8 +76,18 @@ export class ChangeListComponent implements OnInit, DoCheck, OnDestroy {
     // function for testing term
     findMatch(name: string, term: string){
         // Modify search for upper and lower case
-        let nameLowerCase = name.toLowerCase();
-        let termLowerCase = term.toLowerCase();
+        let nameLowerCase: string = '';
+        let termLowerCase: string = '';
+
+        // Part add for remove slow server error //
+        if(name != null){
+            nameLowerCase = name.toLowerCase();
+        }
+        if(term != null){
+            termLowerCase = term.toLowerCase();
+        }
+
+        // Finish //
 
         if(nameLowerCase.indexOf(termLowerCase) !== -1){
             return true;

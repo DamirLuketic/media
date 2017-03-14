@@ -70,7 +70,6 @@ export class RegisterLoginComponent implements OnInit{
             if(data['id']){
               // remove previous user cookies
               this.cookieService.removeAll(),
-                  console.log(data),
                   // check if remember check in login is checked
                   // add data to user or to cookies
                   // if add data to cookies, also add in userData

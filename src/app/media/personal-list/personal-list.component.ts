@@ -56,18 +56,12 @@ export class PersonalListComponent implements OnInit {
 
     // Collect data for all media group -> On each init collect data to update current list
     this.audioSubscription = this.audioService.collectAudioPersonal(this.authService.auth.id).subscribe(
-        (data: AudioPersonal[]) => {
-          this.currentService.currentAudioPersonal = data,
-              console.log(data)
-        },
+        (data: AudioPersonal[]) => this.currentService.currentAudioPersonal = data,
         error => console.log(error)
     )
 
     this.videoSubscription = this.videoService.collectVideoPersonal(this.authService.auth.id).subscribe(
-        (data: VideoPersonal[]) => {
-          this.currentService.currentVideoPersonal = data,
-              console.log(data)
-        },
+        (data: VideoPersonal[]) => this.currentService.currentVideoPersonal = data,
         error => console.log(error)
     )
   }
@@ -93,8 +87,18 @@ export class PersonalListComponent implements OnInit {
   // function for testing term
   findMatch(name: string, term: string){
   // Modify search for upper and lower case
-    let nameLowerCase = name.toLowerCase();
-    let termLowerCase = term.toLowerCase();
+    let nameLowerCase: string = '';
+    let termLowerCase: string = '';
+
+    // Part add for remove slow server error //
+    if(name != null){
+      nameLowerCase = name.toLowerCase();
+    }
+    if(term != null){
+      termLowerCase = term.toLowerCase();
+    }
+
+    // Finish //
 
     if(nameLowerCase.indexOf(termLowerCase) !== -1){
       return true;

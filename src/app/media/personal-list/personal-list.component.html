@@ -11,8 +11,8 @@
 <!-- Show list for audio -> Start -->
 
 <ul class="list-group" *ngIf="currentViewMedia == 'Audio'">
-    <li class="list-group-item" *ngFor="let audio of audioPersonalView" (click)="setCurrentMedia(audio)"
-        [ngClass]="{currentView: currentAudioId == audio.id}">
+    <li class="list-group-item" *ngFor="let audio of audioPersonalView | paginate: { itemsPerPage: 8, currentPage: p }"
+        (click)="setCurrentMedia(audio)" [ngClass]="{currentView: currentAudioId == audio.id}">
         {{audio.band + ' - ' + audio.album}}<span *ngIf="audio.year">{{' (' + audio?.year + ')'}}</span></li>
 </ul>
 
@@ -21,9 +21,13 @@
 <!-- Show list for video -> Start -->
 
 <ul class="list-group" *ngIf="currentViewMedia == 'Video'">
-    <li class="list-group-item" *ngFor="let video of videoPersonalView" (click)="setCurrentMedia(video)"
-        [ngClass]="{currentView: currentVideoId == video.id}">
+    <li class="list-group-item" *ngFor="let video of videoPersonalView | paginate: { itemsPerPage: 8, currentPage: p }"
+        (click)="setCurrentMedia(video)" [ngClass]="{currentView: currentVideoId == video.id}">
         {{video.name}}<span *ngIf="video.year">{{' (' + video?.year + ')'}}</span></li>
 </ul>
 
 <!-- Show list for video -> End -->
+
+<!-- Paginate controls -> Start -->
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<!-- Paginate controls -> End -->

@@ -30,6 +30,7 @@ import { ShowMediaComponent } from "./media/show-media/show-media.component";
 import { MediaService } from "./shared/services/media.service";
 import { CanLeaveGuard } from "./shared/guardiens/canLeave.guard";
 import { AuthAccessGuard } from "./shared/guardiens/authAccess.guard";
+import {Ng2PaginationModule} from "ng2-pagination";
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { AuthAccessGuard } from "./shared/guardiens/authAccess.guard";
     FormsModule,
     HttpModule,
       ReactiveFormsModule,
-      routes
+      routes,
+    Ng2PaginationModule
   ],
   providers: [LanguageService, AuthService, RootService, CookieService, ContactService, AudioService, VideoService,
     CurrentService, MediaService, CanLeaveGuard, AuthAccessGuard],
