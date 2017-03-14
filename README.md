@@ -1,31 +1,28 @@
-# Media
+App for menage and exchange media between user -> Partial finish version without all components
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.15.
-
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/). 
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Deploying to Github Pages
-
-Run `ng github-pages:deploy` to deploy to Github Pages.
-
-## Further help
-
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Front end -> Angular2
+ 
+ App content:
+ 
+ Responsive design.
+ Search engine with auto confirms, and optimized system, for saving memory.
+ Reactive programming.
+ Menage data through Services.   
+ Usage native HTTP protocol for communicate with REST API (Laravel\MySQL) 
+ Register and login system, with e-mail confirmation.
+ Optional using of cookies, for remember login data.
+ Protected routes \ Child routes system.
+ Auth protection route.
+ Page pagination with a ng2 system (through npm).
+ Show\hide components for a specific route.
+ Implements of self-written interfaces.
+ 
+ Upload interfaces is created through front-end, but data is stored and managed through beck-end (Laravel).
+ 
+ In app is some leftover for future usage (connection between user, personal message...)
+ 
+ REST API is created with usage of modified polymorphic connection,
+ and for front-end is also adopted for this system.
+ 
+ REST API:
+ https://github.com/DamirLuketic/media_rest_api
