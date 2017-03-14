@@ -21,6 +21,8 @@ export class PersonalListComponent implements OnInit {
   public audioPersonalView: AudioPersonal[] = [];
   public videoPersonalView: VideoPersonal[] = [];
 
+  public searchTerm: string = '';
+
   // Default value for language
   public personal: string;
   public currentViewMedia: string;
@@ -36,6 +38,9 @@ export class PersonalListComponent implements OnInit {
   // Deleted media id
   public deletedAudioId = [];
   public deletedVideosId = [];
+
+  // Variable for search message
+  public searchMessage: string;
 
   constructor(
       private languageService: LanguageService,
@@ -85,6 +90,19 @@ export class PersonalListComponent implements OnInit {
     }
   }
 
+  // function for testing term
+  findMatch(name: string, term: string){
+  // Modify search for upper and lower case
+    let nameLowerCase = name.toLowerCase();
+    let termLowerCase = term.toLowerCase();
+
+    if(nameLowerCase.indexOf(termLowerCase) !== -1){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   ngDoCheck(){
     // Set current view media from "current" service
     this.currentViewMedia = this.currentService.currentMediaType;
@@ -98,27 +116,49 @@ export class PersonalListComponent implements OnInit {
     switch (this.languageService.getLanguage()){
       case 'de':
         this.personal = 'Persönliche Liste';
+          if(this.currentViewMedia == 'Audio'){
+            this.searchMessage = 'Suche nach Band oder Album';
+          }else{
+            this.searchMessage = 'Suche nach Regisseur oder Film Name';
+          }
         break;
       case 'en':
         this.personal = 'Personal list';
+          if(this.currentViewMedia == 'Audio'){
+            this.searchMessage = 'Search by band or album';
+          }else{
+            this.searchMessage = 'Search by director or movie name';
+          }
         break;
       case 'hr':
         this.personal = 'Osobna lista';
+          if(this.currentViewMedia == 'Audio'){
+            this.searchMessage = 'Traži po grupi ili albumu';
+          }else{
+            this.searchMessage = 'Traži po redatelju ili imenu filma';
+          }
         break;
       default:
         this.personal = 'Personal list';
+          if(this.currentViewMedia == 'Audio'){
+            this.searchMessage = 'Search by band or album';
+          }else{
+            this.searchMessage = 'Search by director or movie name';
+          }
     }
 
     // Collect deleted media id
     this.deletedAudioId = this.currentService.deletedAudioId;
     this.deletedVideosId = this.currentService.deletedVideosId;
 
-    // Set audio and video for view -> if not in deleted arrays
+    // Set audio and video for view -> if not in deleted arrays, and if search term applied
     if(this.currentService.currentAudioPersonal != []){
       this.audioPersonalView = [];
       for(let audio of this.currentService.currentAudioPersonal){
         if(this.isInDeletedAudioArray(audio.id) == false){
-          this.audioPersonalView.push(audio);
+          if(this.findMatch(audio.band, this.searchTerm) || this.findMatch(audio.album, this.searchTerm)){
+            this.audioPersonalView.push(audio);
+          }
         }
       }
     }
@@ -127,7 +167,9 @@ export class PersonalListComponent implements OnInit {
       this.videoPersonalView = [];
       for(let video of this.currentService.currentVideoPersonal){
         if(this.isInDeletedVideoArray(video.id) == false){
-          this.videoPersonalView.push(video);
+          if(this.findMatch(video.director, this.searchTerm) || this.findMatch(video.name, this.searchTerm)){
+            this.videoPersonalView.push(video);
+          }
         }
       }
     }

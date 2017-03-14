@@ -1,6 +1,13 @@
 <h3>{{personal}}</h3>
 <h4>{{currentViewMedia}}</h4>
 
+<form>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="{{searchMessage}}"
+               #searchValue (input)="searchTerm = $event.target.value">
+    </div>
+</form>
+
 <!-- Show list for audio -> Start -->
 
 <ul class="list-group" *ngIf="currentViewMedia == 'Audio'">

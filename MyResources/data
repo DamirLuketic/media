@@ -67,3 +67,9 @@ recycle user-> registerLogin -> from couple of app
                                        )
                                     }
 
+-> Disabled a) -> Media Component -> HTML -> Allowed
+            b) -> App Component HTML -> User (2x)
+            c) -> Media -> Show Media HTNL -> submit button for EXCHANGE (also DELETE part for upload form data, and in TS part for recive form data)
+
+            d) -> Adjust REST API -> AudioController (audio_for_change) & VideoController (video_for_change)
+                -> Send e-mail instead user name

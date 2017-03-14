@@ -1,7 +1,7 @@
   <!-- Show for changeable and available media -> Template drive approach -> Start -->
   <div class="row" id="audioChangeAllowedForm" *ngIf="currentPurpose != 'Personal' && currentMedia.id">
 
-    <form disabled="disabled">
+    <form>
       <fieldset>
         <legend>{{currentMedia?.album}}{{currentMedia?.name}}
           <span *ngIf="!currentMedia.album && !currentMedia.name">{{selectMedia}}</span>
@@ -144,12 +144,13 @@
           </div>
         </div>
 
-        <div class="col-md-6 pull-right">
-          <div class="form-group">
-            <label for="offer">{{sendOffer}}</label>
-            <button class="btn btn-primary form-control" id="offer">{{sendOffer}}</button>
-          </div>
-        </div>
+        <!-- c) Disabled -->
+        <!--<div class="col-md-6 pull-right">-->
+          <!--<div class="form-group">-->
+            <!--<label for="offer">{{sendOffer}}</label>-->
+            <!--<input type="submit" class="btn btn-primary form-control" id="offer" value="{{sendOffer}}">-->
+          <!--</div>-->
+        <!--</div>-->
 
       </fieldset>
     </form>
@@ -192,7 +193,9 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label for="conditionPersonal">{{condition}}</label>
+            <label for="conditionPersonal">{{condition}}
+              <a target="_blank" href="http://www.goldminemag.com/collector-resources/record-grading-101">(global)</a>
+            </label>
               <select name="condition_id" id="conditionPersonal" class="form-control"
                       [ngModel]="currentMedia?.condition_id">
                 <option *ngFor="let c of conditions;" value="{{c.id}}">{{c.name}}</option>
@@ -279,8 +282,10 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="for_changePersonal">{{changeStatus}}</label>
-            <input type="text" class="form-control" id="for_changePersonal"
-                   [ngModel]="currentMedia?.for_change" name="for_change">
+              <select name="for_change" id="for_changePersonal" class="form-control" [ngModel]="currentMedia?.for_change">
+                <option value="0">{{changeNotAllowed}}</option>
+                <option value="1">{{changeAllowed}}</option>
+              </select>
           </div>
         </div>
 
@@ -324,7 +329,8 @@
             <!-- Set new image -> Start -->
             <div class="col-xs-3" *ngIf="currentMedia.images.length < 3">
               <div class="form-group" id="imageUpload">
-                <label for="uploadImage" class="btn uploadImageShow" id="uploadImageShow">{{addPhoto}} **</label>
+                <label for="uploadImage" class="btn uploadImageShow" id="uploadImageShow">{{addPhoto}}
+                  <span *ngIf="currentMedia.images.length < 3">**</span></label>
                 <input type="file" class="uploadImage" id="uploadImage"
                        (change)="fileUpload($event, currentMedia)" accept=".jpg,.png">
               </div>
@@ -333,8 +339,8 @@
 
           </div>
           <br />
-            <div class="pull-right" *ngIf="currentMedia.images.length != 0" style="font-size: 1.2rem">
-              <p>* {{makeFeatured}}</p>
+            <div class="pull-right" style="font-size: 1.2rem">
+              <p *ngIf="currentMedia.images.length > 1">* {{makeFeatured}}</p>
               <p *ngIf="currentMedia.images.length < 3">** {{addPhotoInfo}}</p>
             </div>
           <br /><br />

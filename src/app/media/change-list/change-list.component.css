@@ -6,6 +6,10 @@ ul > li:hover {
     background-color: #2aabd2;
 }
 
+.userMedia {
+    background-color: whitesmoke;
+}
+
 .currentView {
     background-color: orange;
 }

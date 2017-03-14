@@ -40,6 +40,7 @@ export class AllowedListComponent implements OnInit, DoCheck, OnDestroy {
   ) { }
 
   ngOnInit() {
+
     // Change purpose setting
     this.currentService.currentPurpose = 'Allowed';
 
