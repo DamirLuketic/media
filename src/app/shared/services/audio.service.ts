@@ -16,12 +16,13 @@ export class AudioService {
     return Observable.throw(error.json());
   }
 
+  // Leftover -> set together with video categories in "MediaService" -> left for eventual future use
   // Get audio categories -> available data for all user so we use "GET" method
-  getAudioCategories(){
-    return this.http.get(this.rootService.apiRoute + '/api/audio_categories').
-        map((response: Response) => response.json()).
-        catch(this.handleError);;
-  }
+  // getAudioCategories(){
+  //   return this.http.get(this.rootService.apiRoute + '/api/audio_categories').
+  //       map((response: Response) => response.json()).
+  //       catch(this.handleError);;
+  // }
 
   // Get Audio for change -> available data for all user so we use "GET" method
   getAudioForChange(){

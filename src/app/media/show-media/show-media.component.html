@@ -168,19 +168,35 @@
         <input type="hidden" [ngModel]="currentMediaType" name="media_category">
         <input type="hidden" [ngModel]="currentMedia?.id" name="id">
 
-        <div class="col-md-6">
+        <!-- Media categories -> Start -->
+        <div class="col-md-6" *ngIf="currentMediaType == 'Audio'">
           <div class="form-group">
             <label for="categoryPersonal">{{mediaCategory}}</label>
-            <input type="text" class="form-control" id="categoryPersonal"
-                   [ngModel]="currentMedia?.audio_category_id || currentMedia?.video_category_id" name="category_id">
+            <select name="category_id" id="categoryPersonal" class="form-control"
+                    [ngModel]="currentMedia?.audio_category_id">
+              <option *ngFor="let c of audioCategories;" value="{{c.id}}">{{c.name}}</option>
+            </select>
           </div>
         </div>
+
+        <div class="col-md-6" *ngIf="currentMediaType == 'Video'">
+          <div class="form-group">
+            <label for="categoryPersonal">{{mediaCategory}}</label>
+              <select name="category_id" id="categoryPersonal" class="form-control"
+                      [ngModel]="currentMedia?.video_category_id">
+                <option *ngFor="let c of videoCategories;" value="{{c.id}}">{{c.name}}</option>
+              </select>
+          </div>
+        </div>
+        <!-- Media categories -> End -->
 
         <div class="col-md-6">
           <div class="form-group">
             <label for="conditionPersonal">{{condition}}</label>
-            <input type="text" class="form-control" id="conditionPersonal"
-                   [ngModel]="currentMedia?.condition_id" name="condition_id">
+              <select name="condition_id" id="conditionPersonal" class="form-control"
+                      [ngModel]="currentMedia?.condition_id">
+                <option *ngFor="let c of conditions;" value="{{c.id}}">{{c.name}}</option>
+              </select>
           </div>
         </div>
 
